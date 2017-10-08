@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+
+
+   
+    
+	<head>
+		<meta charset="utf-8">
+
+		<title>Machine Learning and Neural Networks</title>
+                <meta name="author" content="Roberto Santana">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<!-- <link rel="stylesheet" href="css/reveal.css">  -->
+                <link rel="stylesheet" href="css/fullscreen-img.css">
+                <link rel="stylesheet" href="css/added_css/notebook.css">
+   	        <link rel="stylesheet" href="css/reveal.css">
+                <link rel="stylesheet" href="css/theme/nncourse.css" id="theme">
+                                
+
+	</head>
+
+	<body>
+
+
+		<div class="reveal">
+			<div class="slides">
+
+				<section>
+                                          <div class="my_container">
+                                        <h2>Machine Learning and Neural Networks</h2>
+					<p>Roberto Santana<p>
+					<p>Department of Computer Science and Artificial Intelligence</p>
+                                        <p>University of the Basque Country</p>
+                          		 </div>   
+				</section>
+                                <section id="sec:NN_Intro">   
+                                            <div class="my_container">
+                                             <h3> Introduction to Neural Networks: Table of Contents </h3>
+                                        
+                                              <table style="width:100%"; border=solid>
+
+                                                  <tr>
+                                                      <td> <p class="paragraph2"> <a href="#/sec:BIO_BG"> Biological background </a></p></td>
+                                                      <td><p class="paragraph2"> <a href="#/sec:NNs_Associanism"> Associanism </a></p></td>
+                                                       <td> <p class="paragraph2"> <a href="#/sec:NNs_Initial_Neuron_Model"> Initial neuron models </a></p></td>           
+                                                      <td> <p class="paragraph2"> <a href="#/sec:NNs_Perceptron"> Perceptron </a></p></td>
+                                                  </tr>
+
+                                                  <tr>
+                                                      <td><p class="paragraph2"> <a href="#/sec:NNs_Types_and_Properties"> </a></p></td>
+                                                      <td> <p class="paragraph2"> <a href="#/sec:NNs_Learning"> </a></p></td>       
+                                                      <td><p class="paragraph2"> <a href="#/sec:NNs_Backpropagation"> </a></p></td>
+                                                      <td> <p class="paragraph2"> <a href="#/sec:NNs_Perceptron">   </a></p></td>
+                                                  </tr>                                                                                                                    
+
+                                    
+				              </table>	  
+                          	          </div>   
+
+  		   	       </section>
+				<section>
+                                          <section id="sec:BIO_BG">
+                                          <mark class="red"></mark>
+                                          <div class="my_container">                              	                
+                                                 <h3>Biological background</h3>
+                           		         <h4>Why to look at the brain?</h4>
+                                                     <ul>  
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2">It is still the most powerfull <mark class="red">intelligent machine</mark>.</li>
+                                                           <li class="paragraph2">Its <mark class="red">inner working</mark> has been the inspiration of several AI paradigms.</li>
+                                                           </span>
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2">Much of work on <mark class="red">Neural Networks</mark> have been based on inspired in studies of the neurobiological mechanisms.</li>
+                                                           <li class="paragraph2">Some aspects of he brain mechanisms that support biological intelligence are <mark class="red">still largely unexplored</mark> in ML approaches.</li>
+                                                           </span>
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2"><mark class="red">Neuromorphic technologies</mark>  (e.g.,<a href="http://apt.cs.manchester.ac.uk/projects/SpiNNaker/project/"> SpinNNAker project. </a>) use the brain as a model to develop computational architectures.</li>
+                                                           <li class="paragraph2">Subject of <mark class="red">ongoing</mark> multi-million Euro <mark class="red">research projects</mark>  (e.g.,<a href="http://bluebrain.epfl.ch/page-56882-en.html"> Blue brain project</a> in Europe and  <a href="https://www.braininitiative.nih.gov/">BRAIN initiative</a> in the US).</li>
+<mark class="red"></mark>
+    
+                                                           </span>
+	         
+                                                     </ul> 
+                                              
+                          		 </div>                                     
+                                                   <aside class="notes">
+                                                       What is ML? 
+                                            	   </aside>
+                             	          </section>
+
+                                          <section>
+                                          <div class="my_container">                              	                
+                                                 <h3>Biological background</h3>           
+                           		         <h4>Aspects from biological intelligence missing from ML</h4>
+                                                     <ul>  
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2"><mark class="red">Learning by rewiring</mark>: Brains learn fast, incrementally, and continuously. A singlen neuron can learn hundreds of different patterns  by creating and activating different sets of synapses. Rewiring allows to continuously adding new patterns that do not interphere with each other.</li>
+                                                           </span>
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2"><mark class="red">Sparse distributed representations (SDRs)</mark>: There are millions of neurons but only a small percentage are active at any given time. Each neuron represents a different aspect of a concept. SDRs are inherently robust to errors and noise. Sets of neuron enconding related concepts overlap. Multiple ideas can be simultaneously represented.</li>
+                                                           </span>
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2"><mark class="red">Embodiment</mark>: The brain receives impulses from the sensony organs which feeds the brain with constantly changing input. The neocortex can learn new objects with few movements and sensations.</li>
+                                                           </span>
+                                                     </ul> 
+                                              
+                                                       <p class="paragraph2">J. Hawkins. <a href="http://spectrum.ieee.org/computing/software/what-intelligent-machines-need-to-learn-from-the-neocortex"> What Intelligent Machines Need to Learn From the Neocortex. </a> IEEE-Spectrum. June. Pp. 33-37. 2017. </p>
+                          		 </div>                                     
+                                                   <aside class="notes">
+                                                       What is ML? 
+                                            	   </aside>
+                             	          </section>
+                                          <section>
+                                          <div class="my_container">
+                                                   <h3>Biological background</h3>                                                   
+                                                   <h4>Nervous system</h4>
+
+                                                   <p class="par2_floatright"><IMG SRC="href=../../img/BrainNeurons/nervous_system.jpg" ALT="some text" height="300" width="400"></p> 
+
+                                                   <ol  class="par2_floatleft">                                            
+						          <li> <mark class="red">Sensory systems</mark>: Collect information from the different body parts (visual, auditory, olfactory, gustatory, thermal, tactile etc. information) </li>
+
+ 						          <li> <mark class="red">Motor system</mark>: Control movements. </li>
+						       
+                                                          <li> <mark class="red">Brain</mark>: Where the greater part of information processing happens.  </li>                                                  
+                                                   </ol>	                                                  
+                                  					           
+                                                   
+                                                               
+                                                    <p class="par2_floatleft">J. R. Anderson. <a href="http://doi.apa.org/record/1985-97445-000">  Cognitive psychology and its implications.</a>   WH Freeman/Times Books/Henry Holt & Co. 1990.</p>
+                                                    <p class="par2_floatleft"> Figure: <a href="https://commons.wikimedia.org/wiki/File:Nervous_system_organization_en.svg"> Commons Wikipedia.</a>  </p>
+
+
+                                                       
+                          		 </div>  
+                                                   
+                                                   <aside class="notes">
+  						      There are important differents among animals. However, for most of more complex biological forms the the nervous system has a similar structure.  
+                                            	   </aside>
+        			  </section>
+
+                                  <section>
+                                          <div class="my_container">
+                                                  <h4>Brain</h4>
+
+                                	        <p class="par2_floatleft"> </p>                                                
+                                                
+                                                <p class="par2_floatright"><IMG SRC="href=../../img/BrainNeurons/Major_parts_of_the_brain.jpg" ALT="some text" height="325" width="425"></p> 
+                                             
+                                                <p class="par2_floatleft"> The <mark class="red"> brain </mark> is the control center of the central nervous system of an animal and is responsible for perception, cognition, attention, memory, emotion, and action.</p> 
+
+                                                <p class="par2_floatleft"> The brain is composed by the <mark class="red">cerebrum</mark>, the <mark class="red">brainstem</mark>, and the <mark class="red">cerebellum</mark>.</p> 
+
+                                	        <p class="par2_floatleft"> In humans, the <mark class="red">cerebrum</mark> forms the upper part of the brain. The <mark class="red">brainstem</mark> is the posterior part of the brain and provides the main motor and sensory innervation to the face and neck.</p>       
+                                                <p class="par2_floatleft"> The <mark class="red">cerebellum</mark> lies beneath the cerebrum and has important functions in motor control. </p>       
+                                 
+                                                <p class="par2_floatright"> T. Lewis. <a href="https://www.livescience.com/29365-human-brain.html"> Human Brain: Facts, Functions & Anatomy. </a>  2016.</p>
+                                                 <p class="par2_floatright"> Figure: <a href="https://commons.wikimedia.org/wiki/File:Major_parts_of_the_brain.jpg"> Commons Wikipedia.</a>  </p>
+                          		 </div>                                                         
+                                                   
+                                                   <aside class="notes">
+  						      There are important differents among animals. However, for most of more complex biological forms the the nervous system has a similar structure.  
+                                            	   </aside>
+                          	
+
+        			  </section>
+
+
+
+                                  <section id="sec:BB_Neocortex">
+                                              <h3>Biological background</h3>                                                 
+                                              <div class="container">
+                                                  <span class="fragment">
+                                                  <div class="right">   
+                                                  <h4>The structure of the neocortex</h4>
+                                                      <ul>  
+     		           			           <li class="paragraph2"> It is divided into dozens of regions, each responsible for different cognitive functions.</li>
+      		           			           <li class="paragraph2"> Within each region there are multiple layers of neurons, as well as dozens of neuron types.</li>  
+                                                           <li class="paragraph2">  The neocortex has around \( 3 \times 10^{10} \) neurons. Only 1 or 2 percent of these neurons are  <mark class="red">firing</mark> at any given instant. </li>      	
+                                                           <li class="paragraph2"><p class="paragraph2">J. Hawkins.  <a href="http://spectrum.ieee.org/computing/software/what-intelligent-machines-need-to-learn-from-the-neocortex"> What Intelligent Machines Need to Learn From the Neocortex.</a>   IEEE-Spectrum. June. Pp. 33-37. 2017.</li> 	           			                                                                         </ul>                                                    
+
+                                                  </div>    
+                                                  </span>
+                                                 
+
+                                                  <div class="left">
+                                                  <h4>Some facts about the neocortex</h4>
+                                                  
+                                                      <ol>  
+      		           			           <li class="paragraph2"> The <mark class="red">neocortex</mark> is a deeply folded sheet of 2 mm thick that in humans takes up about 75 percent of the brain's volumen.</li>
+ 
+      		           			           <li class="paragraph2"> Learning, memory formation,  motor command generation, all these tasks involved the neocortex.</li>
+                                                           <li class="paragraph2"> The neocortex stores patterns primarily by <mark class="red"> forming new synapses</mark>.</li>      	
+
+                                                     </ol>  
+                                                
+                          		          </div>
+
+                                                   
+                                              </div>  
+                                                   <aside class="notes">
+                                                       What is ML? 
+                                            	   </aside>
+
+                           	  </section>
+
+                                  <section>
+                                          <div class="my_container">
+                                          
+                                                <h4>Brain</h4>
+
+
+                                	        <p class="par2_floatleft"> The main differences between human and animals brains is their size (relative to body size). </p>   
+                                                <p class="par2_floatright"><IMG SRC="href=../../img/BrainNeurons/Different_Brains.jpg" ALT="some text" height="350" width="450"></p> 
+ 
+                                	        <p class="par2_floatleft"> Humans also have more neurons per unit volume than other animals. </p>   
+      
+                                	        <p class="par2_floatleft"> The more complicated a brain gets, the more gyri and sulci, or wiggly hills and valleys, it has.</p>         
+                                                
+
+                                                <p class="par2_floatleft">T. Lewis.<a href="https://www.livescience.com/29365-human-brain.html">  Human Brain: Facts, Functions & Anatomy.</a>  2016.</p>
+
+                         	      
+                                             
+                                                 <p class="par2_floatright"> Figure: <a href="https://commons.wikimedia.org/wiki/File:Brains-fr.svg"> Commons Wikipedia.</a>  </p>
+
+
+
+                          		 </div>   
+           			  </section>
+
+                                  <section>
+                                          <div class="my_container">  
+                                                  
+                                                <h4>Brain</h4>
+
+
+                                                <p class="par2_floatright"><IMG SRC="href=../../img/BrainNeurons/Brain_Motor_Sensory.png" ALT="some text" height="360" width="440"></p> 
+                                	        <p class="par2_floatleft">The outermost layer of the cerebrum is the cerebral cortex, which consists of four lobes: the frontal lobe, the parietal lobe, the temporal lobe and the occipital lobe. </p>   
+  
+                                            
+                                	        <p class="par2_floatleft"><mark class="red"> Frontal   lobe</mark>: Movement, reasoning, behavior, memory, speaking.</p>    
+                       	                        <p class="par2_floatleft"><mark class="red"> Parietal  lobe</mark>: Knowing right from left, sensation, reading.</p>      
+                      	                        <p class="par2_floatleft"><mark class="red"> Temporal  lobe</mark>: Understanding language, behavior, memory, hearing. </p>    
+
+                                                <p class="par2_floatleft"><mark class="red"> Occipital lobe</mark>: Vision.</p>
+
+
+                       	                        <p class="par2_floatright"> Figure: <a href="https://commons.wikimedia.org/wiki/File:Blausen_0102_Brain_Motor%26Sensory.png"> Commons Wikipedia.</a>  </p>     
+                                             
+                          		 </div>
+        			  </section>
+
+
+
+
+                                   <section>
+                                          <div class="my_container">                                                                             
+                                                <h4>Neurons</h4>
+
+
+                                	        <p class="par2_floatleft"> <mark class="red">Neuron</mark>: A cell that collects and transmits electrical activity. </p>                                                
+                                                
+                                                <p class="par2_floatright"><IMG SRC="href=../../img/BrainNeurons/neuron_parts.png" ALT="some text" height="350" width="450"></p> 
+                                	        <p class="par2_floatleft"><mark class="red">Soma</mark>: The cell body of the neuron, which contains the nucleus. </p>                                                
+                                	        <p class="par2_floatleft"><mark class="red">Dendrites</mark>: Short, heavily ramified branches that extend from the cell body.</p>                                                
+                                	        <p class="par2_floatleft"><mark class="red">Axon</mark>: A long structure,  often covered by a myelin sheath, used by neurons to communicate with each other.</p>              
+                       	                        <p class="par2_floatright"> Figure: <a href="https://commons.wikimedia.org/wiki/File:Neuron.jpg"> Commons Wikipedia.</a> 
+                                  
+                          		 </div>  
+                             
+        			  </section>
+
+                                   <section>
+                                               <div class="my_container">
+                                            
+                                                <h4>Neurons</h4>
+
+
+                                	        <p class="par2_floatleft"><mark class="red">Synapse</mark>: The place  at which an axon and a dendrite almost touch each other</p>                                                
+
+                                                <p class="par2_floatright"><IMG SRC="href=../../img/BrainNeurons/Complete_neuron_cell_diagram_en.svg.png" ALT="some text" height="450" width="450"></p> 
+
+                                	        <p class="par2_floatleft">Releasing <mark class="red"> neurotransmitters</mark>  axons can modify the membrane of the receiving dendrite</p>                                                
+                                	        <p class="par2_floatleft">Synapses that reduce the potential difference are called  <mark class="red"> excitatory</mark>, those that increase it are called <mark class="red"> inhibitory</mark>. </p>    
+                                            
+                                	        <p class="par2_floatleft">The sudden, temporary change of the electrical potential, which is called <mark class="red"> action potential</mark>, propagates along the axon. </p>           
+                                                <p class="par2_floatright"> Figure: <a href="https://en.wikipedia.org/wiki/File:Complete_neuron_cell_diagram_en.svg"> Commons Wikipedia.</a>                                    
+	                                 </div>   
+
+        			  </section>
+			
+
+                                   <section>
+                                                <h3>Biological background</h3>                                                 
+                                                <h4>Neurons</h4>
+                                               <div class="my_container">
+
+                                	        <p class="par2_floatleft"> Information is encoded in  the changes in the electrical potential of the neuron's membrane and the number of nerve impulses that a neuron transmits per second (<mark class="red">  firing rate </mark>).</p>                                                
+
+                                                 
+                                                <p class="par2_floatright"><IMG SRC="href=../../img/BrainNeurons/Rat_Neuron.jpg" ALT="some text" height="350" width="450"></p> 
+
+                                	        <p class="par2_floatleft"><p class="par2_floatleft"> <mark class="red"> Neural coding</mark>: Studies how individual neurons and ensembles of neurons encode information.</p>                                                
+                                	 
+
+                                                <p class="par2_floatleft">R. Kruse et al. <a href="https://books.google.es/books?hl=en&lr=&id=An0XDQAAQBAJ&oi=fnd&pg=PR5&dq=Computational+Intelligence+A+Methodological+Introduction&ots=Hpxd8sOe2u&sig=qXWe_JSSQEKszUtf15pmZIvKw6c#v=onepage&q=Computational%20Intelligence%20A%20Methodological%20Introduction&f=false">Computational intelligence: a methodological introduction.</a> Springer. 2016.</p>
+                          		         </div>        
+        			         </section>          
+         	                </section>  
+                                <section>     
+                                    <section id="sec:NNs_Associanism">
+                                          <mark class="red"></mark>
+                                                   <div class="my_container">  
+                                                     <h3>Associanism</h3>
+                                                      <h4>Definition</h4>
+                                                       <ul> 
+                                                           <p class="paragraph2"> Mind is a set of conceptual elements that are <mark class="red">organized as associations</mark> between these elements.</p> 
+                                                       <ul/> 
+                                                      <h4>Four laws of association (Aristotle)</h4>
+                                                      <ol>
+
+						             <li class="paragraph2"> <mark class="red">Contiguity</mark>: Things or events with spatial or temporal proximity tend to be associated in the mind.</li>
+						             <li class="paragraph2">  <mark class="red">Frequency</mark>: The number of co-occurrences of two events is proportional to the strength  of association between these two events.</li>
+ 						             <li class="paragraph2">  <mark class="red">Similarity</mark>: Thought of one event tends to triggers the thought of a similar event.</li>  
+						             <li class="paragraph2">  <mark class="red">Contrast</mark>: Thought of one event tends to triggers the thought of an opposite event.</li>      		           			                    
+                                                      <ol/>
+                          	 	           </div>                                                      
+                                                   <aside class="notes">
+  						     Neural models are not new. The study of the mind led to the creation of theories and models.
+						     One of these theories is Associanism. It establishes that the mind is formed by conceptual elements that are related as associations. 
+						     Since the antiguity this idea of association was present.  Aristotle described four laws of association that are relatively easy to grasp. 
+                                            	   </aside>
+ 				          </section>
+
+                                        <section>
+                                              <h3>Associanism</h3>
+                                              <div class="container">
+                                              <mark class="red"></mark>
+                                                  <div class="right">   
+                                                       
+                                                   <h4>David Hartley (1705-1757)</h4>
+                                                   <ul>  
+
+                                                         <li class="paragraph2"> Memory could be conceived as <mark class="red">smaller scale vibrations</mark> in the same regions of the brain as the original sensory experience. </li>
+                                                         <li class="paragraph2"> These vibrations act as a material basis for the <mark class="red">stream of consciousness</mark>. </li>
+ 
+                                                    <ul/>                                                                                      
+                                                  </div>   
+
+
+                                                  <div class="left">
+                                                   <h4>Thomas Hobbes (1588-1679)</h4>
+                                                   <ul>  
+       		           			            <li class="paragraph2">Complex experiences are  <mark class="red">association</mark>  of simple experiences which are  <mark class="red">associations</mark> of sensations.</li>
+
+  <li class="paragraph2"> Associations exists by means of  <mark class="red">coherence</mark> and  <mark class="red">frequency</mark> as its  <mark class="red">strength factor</mark>.</li>
+ 
+                                                            
+                                                   </ul> 
+                                                
+                           		          </div>
+    
+                                                  <p class="paragraph2">C. G. Boree. <a href="http://webspace.ship.edu/cgboer/psychbeginnings.html"> Psychology: the beginnings.</a>  </p>            
+                               
+                          		     </div>                       
+              
+                                                   <aside class="notes">
+  						    These ideas were extended and developed by other philosophers and it is interesting how the explanations given for the mind and processes such as the memory are related to current neural network models. 
+
+                                                    In particular, how coherence and frequency are related to the strength of an association. Similarly, defining memory as a vibration in the same region of the brain where the original sensory experience were experienced. 
+
+                                           
+                                         	   </aside>                                             
+
+                                          </section>
+
+                              	         <section>
+                                           <div class="my_container">
+                                           <mark class="red"></mark>
+                               	                 <h3>Initial neuron models</h3>
+                           		         <h4>Hebbian learning rule</h4>
+                                                     <ul>  
+      		           			           <li class="paragraph2"> Introduced by Donald Hebb and related to the ideas underlying the <mark class="red">associationism model</mark>.</li>
+                                                           <li class="paragraph2">The  <mark class="red">strength of the connection</mark>  between two neurons should increase as the frequency of their co-ocurrence increases.</li>
+                                                           <li class="paragraph2"><mark class="red">Drawback</mark>: As co-ocurrences appears more, the weights do not cease to increase (unstableness of the Hebbian learning rule).</li>
+                                                     </ul> 
+                                                     <p class="paragraph2">  D. O. Hebb. <a href="https://www.amazon.com/Organization-Behavior-Neuropsychological-Theory/dp/0805843000">The organization of behavior: A neuropsychological theory.</a> Psychology Press. 1949.</p> 
+                                                  <p class="paragraph2">H. Wang, B. Raj, and E. P. Xing. <a href="https://arxiv.org/abs/1702.07800">On the Origin of Deep Learning.</a>   arXiv preprint arXiv:1702.07800. 2017.</p>         
+                          		 </div>   
+                                                   <aside class="notes">
+                                                       The Hebbian learning was one of the first ways to represent using formulas the idea of Associationism.
+                                                       The equation provides a way to update the strength of the connection of a neuron to the other neurons.
+                                                       The problem is that there is not limit to the growth of the weights.
+                                                       The Hebbian Learning Rule is seen as laying the foundation of neural networks. 
+                                            	   </aside>
+
+                             	        </section>
+
+
+				          <section  id="sec:NNs_Initial_Neuron_Model">
+                                          <mark class="red"></mark>
+                                              <div class="my_container">
+                                	        <h3>Initial neuron models</h3>
+                             		        <h4>Hebbian learning rule</h4>
+
+                                                    <mark class="red">\[ \Delta w_i = \eta \, x_i \, y \]</mark>
+                                                    <ul>                                                
+                                                         <p class="paragraph2"> \( \Delta w_i \): change in synaptic weights </p>               
+                                                         <p class="paragraph2"> \( \eta \): learning rate </p>               
+                                                         <p class="paragraph2"> \(x_i\): input signals </p>               
+                                                         <p class="paragraph2"> \( y \): post-synaptic reponse. </p>               
+                                                    <ul/> 
+                          		     </div>   
+        			        </section>
+                                        <section>
+                                          <div class="my_container">
+                                          <mark class="red"></mark>
+                               	                 <h3>Initial neuron models</h3>
+                           		         <h4>Fire together, wire together</h4>
+						     <br>
+                                                      <ul> 
+
+                                                          <li class="paragraph2"> When an axon of cell A is near enough to excite a cell B and <mark class="red">repeatedly or persistently takes part in firing it</mark>, some growth process or metabolic change takes place in one or both cells such that <mark class="red">A's efficiency</mark>, as one of the cells firing B, <mark class="red">is increased</mark>. </li>
+
+                                                      </ul> 
+                          		 </div>   
+
+ 				       </section>
+
+                                        <section>
+                                   	      <h3>Initial neuron models</h3>
+                                              <mark class="red"></mark>
+                                              <div class="container">
+
+                                                  <div class="right">   
+
+                                                     <h4>Oja's rule </h4>                                
+                                                      <ul> 
+                                                         <p class="paragraph2" > \(  w^{t+1}_i = w^{t}_i \,  \eta \, y (x_i - y w^{t}_i)  \)</p>
+                                                         <p   class="paragraph2"> If \( \eta \) is very small, and the weights are normalized, i.e.,  \(Z= \left( \sum_i^n w_i^{2} \right)^\frac{1}{2}=1\)</p>
+                                                                         
+                                                     </ul> 
+                          		          </div>     
+
+                                                  <div class="left">
+                          		              <h4>Hebbian learning rule</h4>
+                                                      <ul> 
+                                                          <p class="paragraph2"> \( w^{t+1}_i =w^{t}_i + \eta \, x_i \, y  \) </p>       
+                                                      </ul>   
+                                                      
+                          		              <h4>Normalization</h4>
+                                                      <ul> 
+                                                          <p class="paragraph2"> \( w^{t+1}_i = \frac{w^{t}_i + \eta x_i y}{ \left( \sum_{j=1}^{n} (w^{t}_j + \eta x_j y)^2 \right)^\frac{1}{2}} \),</p>
+                                                          <p class="paragraph2"> where \( n \) is the number of neurons, and normalization is applied at the end of each iteration. </p>    
+                                                      </ul>      
+                                               
+
+                           		          </div>
+    
+                                  
+                                                  <p class="paragraph2">C. G. Boree. <a href="http://webspace.ship.edu/cgboer/psychbeginnings.html"> Psychology: the beginnings.</a>  </p>            
+                                                  <p   class="paragraph2"> E. Oja. <a href="https://link.springer.com/article/10.1007/BF00275687">Simplified neuron model as a principal component analyzers.</a> Journal of Mathematical Biology. 15(3):267-273. 1982.</p>                                   
+                               
+                          		     </div>                       
+              
+                                                   <aside class="notes">
+                                                      The work of Oja was to avoid the unstableness property.
+                                                      To do this he introduced a normalization term at the end of each generation. 
+                                                      He expanded the normalization equation as \( w^{t+1}_i = \frac{w^{t}_i}{Z} +  \eta \left ( \frac{ y x_i}{Z} +    \frac{w_i \sum_j^n yx_jw_j}{Z^3} \right) + O(\eta^2) \).
+                                                       Assuming  \( \eta \) is small and normalization of the weights a more simplified rule appears.   					
+
+
+                                           
+                                         	   </aside>                                             
+
+                                       </section>
+                                        <section>
+                                          <div class="my_container">
+                                          <mark class="red"></mark>
+                                 	        <h3>Initial neuron models</h3>
+                             		        <h4>McCulloch-Pitt (MPC) model</h4>                                                  
+						     <br>
+                                                      <ul> 
+
+                                                          <li class="paragraph2">Simple neuron model based on <mark class="red">electrical circuits</mark>. </li>
+                                                          <li class="paragraph2">The weights $w_i$ are <mark class="red">fixed</mark>. </li>
+                                                          <li class="paragraph2">All weights should be <mark class="red">assigned by manual calculation</mark>.  </li>
+                                                          <li class="paragraph2"><mark class="red">Inhibitory inputs</mark> are part of the model and influence its computation.</li>
+
+
+                                                      </ul> 
+                                                  <p class="paragraph2">H. Wang, B. Raj, and E. P. Xing. <a href="https://arxiv.org/abs/1702.07800">On the Origin of Deep Learning.</a>   arXiv preprint arXiv:1702.07800. 2017.</p>         
+                          		 </div>   
+
+ 				       </section>
+
+
+                                       <section>
+                                                <mark class="red"></mark>
+                                 	        <h3>Initial neuron models</h3>
+                             		        <h4>McCulloch-Pitt (MPC) model</h4>                                                  
+                                                   
+
+                                                <div class="container">
+
+                                                <div class="right">
+                                                     <p class="paragraph2">
+                                                          \[   
+                                                                  y =   \begin{cases} 1, & \mbox{if } \sum_i w_i x_i \geq \theta \wedge  z_j=0,  \, \forall j \\ 
+                                                                                      0, & \mbox{otherwise}  
+                                                                         \end{cases}
+                                                           \]
+                                                     </p>   
+
+                                                   <ul>                                                                                         
+                                                         <p class="paragraph2"> \( y \): output. </p>  
+                                                         <p class="paragraph2"> \(x_i\): input signals </p>    
+                                                         <p class="paragraph2"> \( \theta \): threshold </p>   
+                                                         <p class="paragraph2"> \(w_i\): weights </p>                
+                                                         <p class="paragraph2"> \(z_i\): inhibitory input </p>                                                                                           <ul/>                                                                  
+                                                 </div>            
+
+                                                <div class="left">      
+                                                      <ul>                                                
+                                                         <p class="paragraph2"><img src="href=../../img/artificial-neuron.png"  height="220" width="350"></p>                                                  
+                                                     <ul/>                    
+						 </div>    
+
+                                       
+                                                 
+                                                <p class="paragraph2"> W. S. McCulloch and W. Pitts.<a href="https://link.springer.com/article/10.1007/BF02478259"> A logical calculus of the ideas immanent in nervous activity.</a> Bulletin of Mathematical Biophysics, Vol. 5, Pp. 115-133. 1943.</p>
+                                    
+                                                 </div>         
+                                                   <aside class="notes">
+                                                       Warren McCulloch was a neurophysiologist  and Walter Pitts a logician. They conceived the first neuron model, the MCP neural model.
+                                                       They intended to make computations using a model that keeps some characteristics of real neurons.
+
+                                                       In the MCP model, weights are fixed. 
+                                                       The idea of having inhibitory neuron is interesting and unusual nowadays.
+
+                                            	   </aside>
+        			      </section>
+                                      <section id="sec:NNs_Perceptron">  
+                                	      <h3>Perceptron</h3>
+                                              <mark class="red"></mark>     
+                                              <div class="container">
+                                                  <span class="fragment"> 
+                                                  <div class="right">   
+                                                            
+                                                  <h4>Characteristics</h4>
+                                                     <ul>  
+
+                                                           <li class="paragraph2"> Initially, an <mark class="red">electronic device</mark> implementing some of the associationism ideas.</li>      	
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2">It implements  a  <mark class="red">linear function</mark>  of the input signals.</li>
+                                                           </span> 
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2">Perceptrons can <mark class="red">learn to associate</mark>  specific responses to specific stimuli. </li>  
+                                                           </span> 
+
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2">The <mark class="red">memory of a perceptron is distributed</mark> in the sense that any association may make use of a large proportion of the cells in the system.</li>  
+                                                           </span> 
+                                                           <span class="fragment">                                                         
+                                                          
+
+                                                     </ul>       
+ 
+                                                  </div>   
+
+
+                                                  </span>
+                                                 <div class="left">
+                                                   <h4>Implementation</h4>        
+                                                     <ul>  
+	           			       
+                                                     <p class="paragraph2"><img src="href=../../imgl6/Mark_I_perceptron1.jpeg"  height="300" width="480"></p>                                  
+                                                     </ul>  
+                                                     <p class="paragraph2"> Figure: <a href="https://en.wikipedia.org/wiki/File:Mark_I_perceptron.jpeg"> Commons Wikipedia.</a>  </p>
+
+                                                  </div>  
+                                                   <p class="paragraph2"> F. Rosenblatt. <a href="https://www.ncbi.nlm.nih.gov/pubmed/13602029">The perceptron: a probabilistic model for information storage and organization in the brain.</a> Psychological review, 65(6):386. 1958.</p>                        
+                                                                                          
+                                              </div>  
+                                                   <aside class="notes">
+                                                       The first ``machine'' implementing ideas from associanism. It was an electronic devise able to implement a linear sum of the input signals.
+                                                       Therefore, it can represent OR and AND functions. However, it cannot represent more complex functions such as XOR. 
+                                                       The criticism to the limitations of Perceptron made that work in this area was stucked for many years, until the 80s. 
+                                            	   </aside>
+
+                                          </section>
+
+                                        <section>
+                                	      <h3>Perceptron</h3>
+                                          <mark class="red"></mark>     
+                                              <div class="container">
+                                                  <span class="fragment"> 
+                                                  <div class="right">   
+                                                            
+                                                  <h4>Characteristics</h4>
+                                                     <ul>  
+
+                                                           <li class="paragraph2">Stimuli impinge on a <mark class="red">retina of sensory units</mark> (S-points). </li>  
+
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2">Inputs are transmitted to a set of association cells (A-units) in a <mark class="red">projection-area</mark> (\( A_{I} \)). </li>   
+                                                           </span> 
+
+                                                           <span class="fragment"> 
+                                                            <li class="paragraph2"> The cells in the projection area each receive a number of <mark class="red">connections from the sensory points</mark>. </li>   
+                                                           </span> 
+
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2">Between the projection area and the association area ( \( A_{II}\)), connections are assumed to be <mark class="red">random</mark>. </li>  
+                                                           </span> 
+
+                                                           <span class="fragment">  
+                                                           <li class="paragraph2">The <mark class="red">responses</mark>   ( \(R_1, R_2, \dots, R_n \)) are cells which respond in much the same fashion as the A-units. </li>    
+                                                           </span> 
+
+                                                        
+
+                                                     </ul>        
+                                                  </div>   
+
+
+                                                  </span>
+                                                 <div class="left">
+                                                   <h4>Organization</h4>        
+                                                     <ul>  
+                            
+                                                     <p class="paragraph2"><img src="href=../../imgl6/Organization_Perceptron_Rosenblatt.png"  height="300" width="480"></p>                                  
+                                                     </ul>  
+
+                                                  </div>  
+                                                   <p class="paragraph2"> F. Rosenblatt. <a href="https://www.ncbi.nlm.nih.gov/pubmed/13602029">The perceptron: a probabilistic model for information storage and organization in the brain.</a> Psychological review, 65(6):386. 1958.</p>                        
+                                                                                          
+                                              </div>  
+                                          </section>
+
+                                        <section>
+                                	      <h3>Perceptron</h3>
+                                          <mark class="red"></mark>     
+                                              <div class="container">
+                                                  <span class="fragment"> 
+                                                  <div class="right">   
+                                                            
+                                                  <h4>Characteristics</h4>
+                                                     <ul>  
+
+                                                           <li class="paragraph2"> <mark class="red">Sensory units</mark>: Collect data.</li>
+
+                                                           <span class="fragment"> 
+      		           			           <li class="paragraph2"><mark class="red">Association units</mark>: Linearly add the data with different weights and apply non-linear transform on the thresholded sum. </li>
+                                                           </span> 
+
+                                                           <span class="fragment"> 
+                                                           <li class="paragraph2"><mark class="red">Response units</mark>: Receive the data from association units and output them. </li>
+                                                           </span> 
+
+
+                                                     </ul>        
+                                                  </div>   
+
+
+                                                  </span>
+                                                 <div class="left">
+                                                   <h4>Organization</h4>        
+                                                     <ul>  
+                            
+                                                     <p class="paragraph2"><img src="href=../../imgl6/Perceptron_Connections.png"  height="300" width="480"></p>                                  
+                                                     </ul>  
+
+                                                  </div>  
+                                                   <p class="paragraph2"> F. Rosenblatt. <a href="https://www.ncbi.nlm.nih.gov/pubmed/13602029">The perceptron: a probabilistic model for information storage and organization in the brain.</a> Psychological review, 65(6):386. 1958.</p>                        
+                                                                                          
+                                              </div>  
+                                          </section>
+
+                                        <section>
+                                	      <h3>Perceptron</h3>
+                                          <mark class="red"></mark>     
+                                              <div class="container">
+                                                  <span class="fragment"> 
+                                                  <div class="right">   
+                                                            
+                                                  <h4>Learning</h4>
+                                                     <ul>  
+
+                                                           <li class="paragraph2"> <mark class="red">Non-linear activation units</mark> are introduced.</li>
+
+                                                           <li class="paragraph2"> Weights are updated as:
+
+                                                              <br> 
+                                                              \[
+
+                                                                 w_i(t+1) = w_i(t) + \left (d_j -y_j(t) \right) x_{j,i},
+                                                                \]
+  
+                                                           </li>
+                                                           <p class="paragraph2"> where \( d_j \) is the desired output </p>
+                                                     </ul>        
+                                                  </div>   
+
+
+                                                  </span>
+                                                 <div class="left">
+                                                   <h4>Modern perceptron</h4>        
+                                                     <ul>  
+                            
+                                                     <p class="paragraph2"><img src="href=../../imgl6/Modern_Perceptron.png"  height="300" width="480"></p>                                  
+                                                     </ul>  
+
+                                                  </div>  
+                                                  <p class="paragraph2">H. Wang, B. Raj, and E. P. Xing. <a href="https://arxiv.org/abs/1702.07800">On the Origin of Deep Learning.</a>   arXiv preprint arXiv:1702.07800. 2017.</p>                                                       
+                                                                                          
+                                              </div>  
+                                          </section>
+
+                                      <section>
+                                          <div class="my_container">
+                                                   <h3>Diagnostic test</h3>                                                   
+                                                   <h4>Questions</h4>
+                                                   <ol>
+
+						          <li class="paragraph2">What is the difference between supervised learning and unsupervised learning?  </li>
+
+						          <li class="paragraph2">What is the difference between a classification problem and a regression problem?  </li>
+
+						          <li class="paragraph2">Mention the names of three supervised classification algorithms. </li>
+
+						          <li class="paragraph2">What is the meaning of the parameter k in k-fold cross-validation?  </li>
+
+						          <li class="paragraph2">Mention the name of one optimization algorithm that can be used to find the optimal parameters of  supervised learning algorithms. </li>
+
+						          <li class="paragraph2">Mention the name of a Python library that can be used to solve regression problems. </li>
+
+						          <li class="paragraph2">Given a test dataset \( \mathcal{D} \) of N instances and a classifier \( \mathcal{C} \) that has been already learned using a different training dataset. How to compute the accuracy of \( \mathcal{C} \) on \( \mathcal{D} \)?  </li>
+						                 
+						                                           						           
+                                   						           
+                                                   </ol>            
+                          		 </div>   
+                                              
+                                                  <aside class="notes">
+            
+                                            	  </aside>
+ 				      </section>
+                           </section>                       
+
+			</div>
+		</div>
+
+
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+				history: true,
+				transition: 'linear',
+
+				math: {
+					// mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_HTML-full'
+				},
+
+				dependencies: [
+                                        { src: 'lib/js/fullscreen-img.js' },
+					{ src: 'lib/js/classList.js' },
+					{ src: 'plugin/math/math.js', async: true }
+
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
