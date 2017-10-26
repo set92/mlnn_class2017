@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en">
+
+
+   
+    
+	<head>
+		<meta charset="utf-8">
+
+		<title>Machine Learning and Neural Networks</title>
+                <meta name="author" content="Roberto Santana">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<!-- <link rel="stylesheet" href="css/reveal.css">  -->
+                <link rel="stylesheet" href="css/fullscreen-img.css">
+                <link rel="stylesheet" href="css/added_css/notebook.css">
+   	        <link rel="stylesheet" href="css/reveal.css">
+                <link rel="stylesheet" href="css/theme/nncourse.css" id="theme">
+                                
+
+	</head>
+
+	<body>
+
+
+		<div class="reveal">
+			<div class="slides">
+
+				<section>
+                                          <div class="my_container">
+                                        <h2>Machine Learning and Neural Networks</h2>
+					<p>Roberto Santana<p>
+					<p>Department of Computer Science and Artificial Intelligence</p>
+                                        <p>University of the Basque Country</p>
+                          		 </div>   
+				</section>
+                                <section id="sec:NN_Intro">   
+                                            <div class="my_container">
+                                             <h3>Deep Neural Networks: Table of Contents </h3>
+                                        
+                                              <table style="width:100%"; border=solid>
+
+                                                  <tr>
+
+                                                     <td><p class="paragraph2"> <a href="#/sec:DNNs_Introduction"> Introduction </a></p></td>
+
+                                                      <td><p class="paragraph2"> <a href="#/sec:DNNs_Applications"> Applications </a></p></td>
+
+                                                      <td> <p class="paragraph2"> <a href="#/sec:DNNs_Activation_Functions"> Activation functions  </a></p></td>
+
+                                                      <td> <p class="paragraph2"> <a href="#/sec:DNNs_Prob_Overview"> Overview probabilistic concepts</a></p></td>       
+                        
+
+                                                  </tr>                                                                                                                                            				              </table>	  
+                          	          </div>   
+
+  		   	       </section> 				
+                          </section>
+
+
+                           <section>   
+                                     <section id="sec:DNNs_Introduction">
+                                               <mark class="red"></mark>
+                                               <div class="container">       
+                                                  <h3>Spiking Neural Networks</h3>                                          
+                                                  <div class="right">
+                                                  <h4>Neural network in the brain</h4>
+                                                      <ul>      
+                                                        <img src="https://chickswithcrossbows.files.wordpress.com/2012/01/neuronas_ramon_y_cajal.jpg"  height="430" width="500">           
+					                
+                                                      </ul>                                               
+                                                      <p class="paragraph2"> Figure. <a  href="https://cvc.cervantes.es/ciencia/cajal/cajal_recuerdos/recuerdos/laminas.htm#"> Ramón y Cajal Drawings.</a> </p>
+       
+                          		          </div>                                      
+                                                  <div class="left">   
+                                                      <h4>Advantages and limitations</h4>
+                                                      <ul>      
+						          <li class="paragraph2">SNNs are formed by neuron models that communicate by sequences of spikes.</li>						   
+                                                          <li class="paragraph2">They offer plausible models of neuronal mechanisms and neuron behaviors.</li>	
+
+						          <li class="paragraph2">They are powerful tools for analysis and understanding of elementary processes in the brain.</li>
+						          <li class="paragraph2">Computationally more powerful than perceptrons  and sigmoidal gates.</li>
+
+						          <li class="paragraph2">However, they do not produce <mark class="red">abstract</mark>, <mark class="red">clearly decomposable</mark>,  and  <mark class="red">interpretable representations of a problem</mark>. </li>
+
+                                                      </ul>    
+                                                
+                                         </div>    
+                                                   
+                                              </div>  
+                                                  <aside class="notes">
+					
+                                            	  </aside>                                         
+                                                 
+        		             </section> 
+
+
+
+
+                                       <section data-background-image="http://www.cs.nyu.edu/~roweis/data/mnist_train5.jpg" data-background-size="1600px" data-background-repeat="repeat">
+  	                                            <h1><a href="http://yann.lecun.com/exdb/mnist/"> MNIST Dataset.</a></h1>
+                                         
+                                       </section>
+                                       <section data-background-image="href=../../img/datasets/fashion-mnist-sprite.png">
+                                           
+  	                                            <h1><a href="https://github.com/zalandoresearch/fashion-mnist"> Fashion-MNIST Dataset. </a></h1>
+                                       </section>
+
+                                       <section data-background="imgl10/CIFAR.png" data-background-size="1000px">
+
+                                            <h1><a href="https://www.cs.toronto.edu/~kriz/cifar.html"> CIFAR Dataset.</a></h1>   
+
+ 				      </section>
+
+
+
+ 				      <section>
+                                          <div class="my_container">
+                                                   <h3>Deep neural networks</h3>                                                   
+                                                   <h4>Desiderata for Learning AI</h4>
+                                                   <ol>
+						          <li class="paragraph2">Ability to learn, complex, highly-varying functions.  </li>
+						          <li class="paragraph2">Ability to learn with little human input  low-level, intermediate, and high-level representations.</li>
+						          <li class="paragraph2">Ability to learn from a very large set of examples.  </li>
+						          <li class="paragraph2">Ability to learn from mostly unlabeled data.  </li>
+						          <li class="paragraph2">Ability to exploit the synergies present across a large number of tasks, i.e. multi-task learning. </li>
+						          <li class="paragraph2">In the limit of a large number of tasks and when future tasks are not known ahead of time, strong unsupervised learning (i.e. capturing the statistical structure in the observed data) is an important element of the solution.</li>
+
+                                                    </ol>     		
+                                              
+                                                   <p class="paragraph2">Y. Bengio. <a href="http://www.nowpublishers.com/article/Details/MAL-006"> Learning deep architectures for AI.</a> Foundations and trends in Machine Learning. 2.1. Pp. 1-127. 2009.</p>        
+                          		 </div>   
+                                      
+                                                  <aside class="notes">
+                                                     There are a number of classes of DNNs. These are among the best known.                     
+                                           	  </aside>
+ 				 </section>
+
+
+                                     <section>
+                                                <mark class="red"></mark>
+                                               <div class="container">
+                                                   <h3>Deep Neural Networks</h3>         
+                                    
+                                                  <div class="right">
+                                                  <h4>Goals</h4>
+                                                      <ul>      
+						          <li class="paragraph2">Automatically discover problem representations of different complexity from the lowest level features to highest level concepts. </li>
+						          <li class="paragraph2">Being able to scale to very large problems.</li>
+						          <li class="paragraph2">Provide interpretable representations of the problem. </li>
+						          <li class="paragraph2">Allow multi-task solving by re-using modular components of the network.</li>
+						          <li class="paragraph2">Be robust to different transformations of the original training data. </li>
+                                                      <ul/>                                             
+
+                         		          </div>
+                                                  <div class="left">   
+                                                   <h4>Characteristics</h4>
+                                                   <ol>
+						          <li class="paragraph2">Are composed of <mark class="red">multiple processing layers</mark>  to learn representations of data with multiple levels of abstraction.</li>
+                                        
+						          <li class="paragraph2">Once the architecture has been defined, they require <mark class="red">very little engineering by hand</mark>.</li>
+                                        
+						          <li class="paragraph2">Exploit the property that many natural signals are <mark class="red">compositional hierarchies</mark>, in which higher-level features are obtained by composing lower-level ones.</li>
+                                        
+                                                          <li class="paragraph2">Good features <mark class="red">can be learned automatically</mark>  using a general-purpose learning procedure.</li>
+                                        
+						          <li class="paragraph2">They heavily depend on <mark class="red"> local optimization methods</mark> to tune their parameters.</li>
+                                        
+			                
+                                                      </ol>                                                        
+                                                  </div>                                                       
+                                              </div>               
+                                                <aside class="notes">
+                                           	  </aside>
+ 				      </section>
+
+
+				      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                   <h3>Deep Neural Networks</h3>       
+                                                   <h4>Shallow and Deep Neural Networks</h4> 
+                                             
+                                                   <ol>
+
+                                                        <img src="href=../../imgl10/Learning_DBN_Salakhutdinov.png"  height="350" width="1200">           
+
+                                       
+						  
+                                                    </ol>     						           
+                          		 </div>                
+                                                  <p class="paragraph2"> R. Salakhutdinov. <a href="http://www.annualreviews.org/doi/abs/10.1146/annurev-statistics-010814-020120">Learning deep generative models.</a> Annual Review of Statistics and Its Application. Vol. 2. Pp. 361-385. 2015.</p>                                    
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+                                       <section>
+                                                <mark class="red"></mark>
+                                               <div class="container">
+                                                   <h3>Deep Neural Networks</h3>         
+                                    
+                                                  <div class="right">
+                                                  <h4>Multiple layers</h4>
+                                                      <ul>      
+                                                        <img src="https://www.cs.toronto.edu/~frossard/post/vgg16/vgg16.png"  height="440" width="500">           
+					                
+                                                      <ul/>                                             
+                                                      <p class="paragraph2"> <a href="https://www.cs.toronto.edu/~frossard/post/vgg16/">VGG in TensorFlow.</a> 2016.</p>         
+
+                         		          </div>
+                                                  <div class="left">   
+                                                 <h4>Components</h4>
+                                                      <ol>      
+						          <li class="paragraph2"><mark class="red">Structure: </mark>Characterized by a combination of:
+							    <ul>      
+						                  <li class="paragraph2"> Activation functions.</li>
+						                  <li class="paragraph2"> Layers.</li>
+						                  <li class="paragraph2"> Loss functions. </li>
+							    </ul>    
+							  </li>
+						          <li class="paragraph2"><mark class="red">Activation functions</mark>: Using a combination of the inputs, determines whether the neuron is activated (fired).
+							    <ul>      
+						                  <li class="paragraph2"> Sigmoid</li>
+						                  <li class="paragraph2"> tahn</li>
+						                  <li class="paragraph2"> ReLU, ELU, Leaky ELU, etc. </li>
+							    </ul>    
+							  </li>
+ 				                         <li class="paragraph2"><mark class="red">Layers</mark>:  Determine how the neurons are organized. Fully connected, recurrent, dropouts, convolutional and pooling. </li>
+						          <li class="paragraph2"><mark class="red">Loss functions</mark>: Establishes the criterion to evaluate the quality of NN model. Mean square error, cross-entropy loss, etc.  </li>
+
+                                                      <ol/>                                             
+
+                                                                                                   
+                                                  </div>                                                       
+                                              </div>               
+                                                <aside class="notes">
+                                           	  </aside>
+ 				      </section>
+
+                                     <section id="sec:DNNs_Activation_Functions">
+                                                <mark class="red"></mark>
+                                               <div class="container">
+                                                   <h3>Activation Functions</h3>         
+                                    
+                                                  <div class="right">                                                
+                                                      <ul>      
+                                                        <img src="href=../../imgl10/sigmoid.png"  height="300" width="500">           
+					                
+                                                      <ul/>                                             
+                                                      <p class="paragraph2">  <a href=" ">Title.</a> Details. 2015.</p>         
+
+                         		          </div>
+                                                  <div class="left">   
+                                                   <h4>Sigmoid linear unit</h4>
+                                                   <ul>
+
+						          <li class="paragraph2">One of the most widely used activation functions today. </li>
+						          <li class="paragraph2"> \(   f(x) =  \frac{1}{1+e^{-x}} \)</li>
+						          <li class="paragraph2"> It is nonlinear in nature. </li>
+						          <li class="paragraph2">  The output of the activation function is always going to be in range \((0,1) \). </li>
+
+
+						          <li class="paragraph2">It has the problem of the <mark class="red">vanishing gradients</mark>. </li>
+
+
+                                                   </ul>                                                        
+                                                  </div>                                                       
+                                              </div>               
+                                                <aside class="notes">
+                                           	  </aside>
+ 				   </section>
+                                    <section>
+                                                <mark class="red"></mark>
+                                               <div class="container">
+                                                   <h3>Activation Functions</h3>         
+                                    
+                                                  <div class="right">                                                
+                                                      <ul>      
+                                                        <img src="href=../../imgl10/tanh.png"  height="300" width="500">           
+					                
+                                                      <ul/>                                             
+                                                      <p class="paragraph2">  <a href=" ">Title.</a> Details. 2015.</p>         
+
+                         		          </div>
+                                                  <div class="left">   
+                                                   <h4>tanh</h4>
+                                                   <ul>
+
+						          <li class="paragraph2"> \(   f(x) =  \frac{2}{1-e^{-2x}} \)</li>
+						          <li class="paragraph2">It is similar to the sigmoid function.</li>
+						          <li class="paragraph2">Squashes numbers to range [-1,1]. </li>
+						          <li class="paragraph2">It is zero centered.</li>
+						          <li class="paragraph2">It destroys information about the gradient when it is saturated.</li>
+
+						          <li class="paragraph2">The gradient is stronger for tanh than sigmoid (derivatives are steeper).</li>
+
+
+
+                                                   </ul>                                                        
+                                                  </div>                                                       
+                                              </div>               
+                                                <aside class="notes">
+                                           	  </aside>
+ 				     </section>
+                                     <section>
+                                                <mark class="red"></mark>
+                                               <div class="container">
+                                                   <h3>Activation Functions</h3>         
+                                    
+                                                  <div class="right">                                                
+                                                      <ul>      
+                                                        <img src="href=../../imgl10/relu.png"  height="300" width="500">           
+					                
+                                                      <ul/>                                             
+                                                      <p class="paragraph2">  <a href=" ">Title.</a> Details. 2015.</p>         
+
+                         		          </div>
+                                                  <div class="left">   
+                                                   <h4>Rectifier linear unit (ReLU)</h4>
+                                                   <ul>
+						          <li class="paragraph2">\(f(x) = max(0,x) \)</li>
+						          <li class="paragraph2">More biologically plausible.</li>
+						          <li class="paragraph2"> It is nonlinear in nature. </li>
+						          <li class="paragraph2"> Converges much faster than other functions, e.g., sigmoid and tanh.</li>
+						          <li class="paragraph2">Computationally efficient</li>
+						          <li class="paragraph2">The gradient can get toward zero.</li>
+                                                   </ul>                                                        
+                                                  </div>                                                       
+                                              </div>               
+                                                <aside class="notes">
+                                           	  </aside>
+ 				    </section>   
+
+                                      <section  id="sec:NNs_Types_and_Properties">
+                                          <div class="my_container">           
+                                                   <h3>Multi-Layer perceptron</h3>                                   
+                                                   <ul>
+                                                    <img src="href=../../imgl9/Layers_Capabilities.png"  height="500" width="1200">   
+                                                   </ul>                
+          
+                          		 </div>   
+                                            
+                                                      <p class="paragraph2">A. K. Jain, J. Mao, and K. M. Mohiuddin.   Figure. <a href="http://metalab.uniten.edu.my/~abdrahim/mitm613/Jain1996_ANN%20-%20A%20Tutorial.pdf"> Artificial neural networks: A tutorial.</a> Computer. Vol. 29 No. 3. Pp. 31-44. 1996.  </p>                               
+             
+                                                  <aside class="notes">
+                                            	  </aside>
+ 				     </section>
+                                    <section>
+                                                <mark class="red"></mark>
+                                               <div class="container">
+                                                   <h3>Deep Neural Networks</h3>                                          
+                                                  <div class="right">
+                                                  <h4>Deep network architecture</h4>
+
+                                                      <ul>      
+						          <li class="paragraph2">Composed of multiple levels of non-linear operations </li>
+						          <li class="paragraph2">As a model they integrate the steps of feature selection and feature understanding.</li>
+						          <li class="paragraph2">Can learn decomposable representations of complex patterns into simpler patterns.</li>
+
+						          <li class="paragraph2">They are organized as hierarchical features, from simpler patterns in the initial layers to more complex patterns in subsequent layers. </li>
+                                                      <ul/>                                             
+
+                         		          </div>
+                                                  <div class="left">   
+                                                      <h4>Shallow neural networks</h4>
+                                                      <ul>      
+						          <li class="paragraph2">A shallow network has less number of hidden layers. </li>
+						          <li class="paragraph2">The number of parameters required to fit a function should be in general higher.</li>
+						          <li class="paragraph2">They are usually very homogeneous in terms of the activation functions they use.</li>
+		
+			                
+                                                      </ul>    
+                                                    
+                                                  </div>    
+                                                   
+                                              </div>               
+                                                      <p class="paragraph2"> R. Salakhutdinov. <a href="http://www.annualreviews.org/doi/abs/10.1146/annurev-statistics-010814-020120">Learning deep generative models.</a> Annual Review of Statistics and Its Application. Vol. 2. Pp. 361-385. 2015.</p>         
+
+                                                <aside class="notes">
+                                           	  </aside>
+ 				      </section>
+
+
+ 				      <section id="sec:DNNs_Applications">
+                                          <div class="container">
+                                                   <h3>Deep neural networks</h3>          
+ 
+                                                  <span class="fragment">
+
+                                                  <div class="right">
+                                                  <h4>More applications</h4>
+                                                   <ol>
+						          <li class="paragraph2">Predicting the activity of potential drug molecules.</li>
+						          <li class="paragraph2">Analyzing particle accerator data.</li>					
+						          <li class="paragraph2">Reconstructing brain circuits.</li>
+						          <li class="paragraph2">Predicting the effects of mutations in non-coding DNA on gene expression and disease.</li>						     
+  			
+   	
+  						  
+                                                    </ol>   
+                                                                                              
+                          		          </div>
+                                                  </span>           
+                                      
+                                                  <div class="left">   
+
+                                                   <h4>DNNs applications</h4>
+                                                   <ol>
+						          <li class="paragraph2"> Object detection, speech recognition, and machine translation.</li>
+						          <li class="paragraph2"> Generate artistic images with different styles.</li>
+						          <li class="paragraph2"> Clustering patterns of gene expressions .</li>     
+						          <li class="paragraph2"> Sentiment analysis fusioning different modalities.</li>
+  			
+   	
+  						  
+                                                    <ol/>   
+                                                       
+                                                  </div>    
+                                                  
+                                              </div>  
+
+                                                  <p class="paragraph2">H. Wang, B. Raj, and E. P. Xing. <a href="https://arxiv.org/abs/1702.07800">On the Origin of Deep Learning.</a>   arXiv preprint arXiv:1702.07800. 2017.</p>                                                                                       
+
+                                                  <p class="paragraph2"> Y. LeCun, Y. Bengio, and G. Hinton. <a href="https://arxiv.org/abs/1702.07800"> Deep learning.</a> Nature 521.7553 (2015): 436-444. 2015.</p>  
+
+
+                                                  <aside class="notes">
+                                                     The application of deep neural networks are multiple.
+                                                     These are only some few examples.                                     
+                                           	  </aside>
+ 				      </section>
+
+
+                                        <section data-background-image="href=../../imgl10/Object_Recognition_and_Sample.png">
+                                           
+  	                                            <h1><a href="http://modelnet.cs.princeton.edu/"> Modelnet Dataset. </a></h1>
+
+                                                    <h3>Object recognition and generating random shapes with consistent structure.</h3>           
+
+                                                    <p class="paragraph2">Wu et al. <a href="http://3dshapenets.cs.princeton.edu/">3d shapenets: A deep representation for volumetric shapes.</a>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. Pp. 1912-1920. 2015.</p>           
+
+                                       </section>
+
+
+                                        <section data-background-image="href=../../imgl10/Deep_Drug_Discovery.png">
+                  
+                                                    <h3>Deep-learning models for Drug Discovery</h3>           
+
+                                                    <p class="paragraph2">H. Altae-Tran, B. Ramsundar, A. S. Pappu, and V. Pande <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5408335/">Low data drug discovery with one-shot learning.</a>ACS central science. Vol. 3. No. 4. 283.  2017.</p>           
+
+                                       </section>
+ 
+
+
+                                        <section data-background-image="href=../../imgl10/Deep_Cancer_Detection_1.png" data-background-size="1400px">
+                  
+                                                    <h3>Cancer nodule detectors from lung scans with a 3D convolutional NN</h3>           
+
+                                                    <p class="paragraph2">J. de Wit and D. Hammack <a href="http://juliandewit.github.io/kaggle-ndsb2017/">2nd place solution for the 2017 national datascience bowl.</a> Kaggle Competition. 2017.</p>           
+
+                                       </section>
+
+
+                                       <section data-background-image="href=../../imgl10/Deep_Cancer_Detection_2.png" data-background-size="1400px">
+                  
+                                                    <h3>Cancer nodule detectors from lung scans with a 3D convolutional NN</h3>           
+
+                                                    <p class="paragraph2">J. de Wit and D. Hammack <a href="http://juliandewit.github.io/kaggle-ndsb2017/">2nd place solution for the 2017 national datascience bowl.</a> Kaggle Competition. 2017.</p>           
+
+                                       </section>
+
+                                        <section>
+                                            
+                                                   <h3>Playing Atari with Deep Reinforcement Learning</h3>                                     
+
+
+                                                        <iframe  data-autoplay width="1200" height="750"
+                                                           src="https://www.youtube.com/embed/SZ88F82KLX4">
+
+                                                        </iframe>
+
+                                                        <p class="paragraph2">V. Mnih et al. <a href="http://juliandewit.github.io/kaggle-ndsb2017/">Playing atari with deep reinforcement learning.</a>  arXiv preprint arXiv:1312.5602. 2013.</p>   
+                                                 
+
+                                                  <aside class="notes">
+
+                                            	  </aside>
+ 				      </section>
+
+
+
+				      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+   
+                                                   <h4>Neural Artistic Transfer</h4> 
+                                             
+                                                   <ol>
+
+                                                        <img src="href=../../imgl10/Deep_Artistic_Stype.png"  height="950" width="850">           
+
+                                       
+						  
+                                                    </ol>     						           
+                          		 </div>      
+
+
+        
+                                                  <p class="paragraph2">L. A. Gatys, A. S. Ecker, and M. Bethge. <a href="https://arxiv.org/abs/1508.06576">A Neural Algorithm of Artistic Style.</a> arXiv preprint arXiv:1508.06576. 2015.</p>                                    
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+ 
+
+
+
+ 				      <section id="sec:DNNs_Types">
+                                          <div class="my_container">
+                                                   <h3>Deep neural networks</h3>                                                   
+                                                   <h4>Types of DNNs</h4>
+                                                   <ol>
+						          <li class="paragraph2"> Deep Belief Nets (DBNs).  </li>
+						          <li class="paragraph2"> Deep Boltzmann Machines (DBMs).  </li>
+						          <li class="paragraph2"> AutoEncoders (AEs). </li>
+						          <li class="paragraph2"> Convolutional Neural Networks (CNN). </li>
+						          <li class="paragraph2"> Recurrent Neural Networks (RNNs) and LSTM. </li>     
+						          <li class="paragraph2"> Generative Adversarial Networks (GAN). </li>
+
+  						  
+                                                    </ol>     						           
+f                                                    <p class="paragraph2">H. Wang, B. Raj, and E. P. Xing.<a href="https://arxiv.org/abs/1702.07800">On the Origin of Deep Learning.</a> arXiv preprint arXiv:1702.07800. 2017.</p>        
+                          		 </div>   
+                                      
+                                                  <aside class="notes">
+                                                     There are a number of classes of DNNs. These are among the best known.                     
+                                           	  </aside>
+ 				 </section>
+
+
+       		             <section id="sec:DNNs_Prob_Overview">       
+                                               <mark class="red"></mark>
+                                                <div class="container">
+                                                   <h3>Boltzmann machines</h3>   
+                                                   <div class="right">    
+                                                      <h4>Boltzmann Machine probabilities<h4>
+                                                            <table id="customers">
+                                                              <colgroup>                                         
+                                                                 <col style="background-color:yellow">
+                                                                 <col span="8" style="background-color:white">
+                                                                 <col span="3" style="background-color: #bfff00">
+
+                                                                 </colgroup>
+                                                                    <tr> <th>x=(v,h) </th> <th>\(E(x)\)      </th> <th>\(e^{-E(x)}\)</th>  <th>\(p(x)\) </th>  </tr>
+                                                                    <tr> <th>    </th> <th>     </th><th>         </th> <th>         </th> </tr>
+                                                                    <tr> <th>000 </th> <th>  0            </th>  <th>1        </th><th> 1/95        </th> </tr>
+                                                                    <tr> <th>001 </th> <th> -log(2)   </th>  <th>2        </th><th> 2/95        </th> </tr>
+                                                                    <tr> <th>010 </th> <th> -log(2)   </th>  <th>2         </th><th>2/95         </th> </tr>
+                                                                    <tr> <th>011 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>100 </th> <th> -log(2)   </th>  <th>2         </th><th>2/95         </th> </tr>
+                                                                    <tr> <th>101 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>110 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>111 </th> <th> -6log(2)  </th>  <th>64        </th><th>64/95         </th> </tr>
+                                                                    <tr> <th>\(\sum\)</th> <th>               </th>  <th>95         </th><th>1.0         </th> </tr>
+                                                           </table>
+
+
+                                                      <h4>Exercise</h4>    
+                                                        <ol>  
+                                                            <li class="paragraph4"> Compute marginal probabilities \(p(x_1)\)  and \(p(x_1,x_2)\)  </li>         
+                                                            <li class="paragraph4"> Compute conditional probabilities \(p(x_1|x_2)\)  and \(p(x_3|x_2)\)  </li>         
+                                                            <li class="paragraph4"> Compute factorizations \(q(x) = \prod_i p(x_i) \)  and \(r(x) = p(x_1) p(x_2,x_3)\)  </li>         
+                          	       	                </ol>    
+
+                                                     </div>     
+
+                                                  <div class="left">   
+                                                   <h4>Energy function</h4>                          		 
+                                                    <p class="paragraph2"> 
+                                                        \[
+ 						                  \begin{align}
+
+                                                                     E(v,h) &=& -\sum_i v_ib_i  -\sum_k h_k d_k    -\sum_{i,j} v_iv_jw_{i,j} \\  
+                                                                            &=& -\sum_{i,k} v_ih_k w_{i,k}   -\sum_{k,l} h_kh_lw_{k,l}
+           
+	                     					   \end{align}
+                                                        \] 
+                                                     </p> 
+        
+                                                   <h4>Weight matrix</h4>    
+                                                   <ul>  
+                                                    <p class="paragraph4"> 
+                                                      \[
+                                                      W = \begin{pmatrix} 
+                                                       0&  log(2) &  log(2)\\
+                                                       log(2)&  0&  log(2)\\
+                                                       log(2)&  log(2)&  0\\                                                  
+
+                                                        \end{pmatrix} 
+                                                      \] 
+                                                    </p>         
+                          		           </ul>    
+
+                                                   <h4>Assumptions</h4>    
+                                                   <ul>  
+                                                    <p class="paragraph4"> \(b_i,h_i=log(2) \; \forall i \)   </p>         
+                                                    <p class="paragraph4"> \(W_{i,j}=log(2) \; \forall i,j \)   </p>         
+                          		           </ul>    
+                                                    </div>                                                             
+                                                   </div>                                                                                     
+                                                  <aside class="notes">
+                                                    
+                                           	  </aside>
+                              
+        		             </section>   
+
+       		                     <section>       
+                                               <mark class="red"></mark>
+                                                <div class="container">
+                                                   <h3>Boltzmann machines</h3>   
+                                                   <div class="right">    
+                                                      <h4>Boltzmann Machine probabilities<h4>
+                                                            <table id="customers">
+                                                              <colgroup>                                         
+                                                                 <col style="background-color:yellow">
+                                                                 <col span="8" style="background-color:white">
+                                                                 <col span="3" style="background-color: #bfff00">
+
+                                                                 </colgroup>
+                                                                    <tr> <th>x=(v,h) </th> <th>\(E(x)\)      </th> <th>\(e^{-E(x)}\)</th>  <th>\(p(x)\) </th>  </tr>
+                                                                    <tr> <th>    </th> <th>     </th><th>         </th> <th>         </th> </tr>
+                                                                    <tr> <th>000 </th> <th>  0            </th>  <th>1        </th><th> 1/95        </th> </tr>
+                                                                    <tr> <th>001 </th> <th> -log(2)   </th>  <th>2        </th><th> 2/95        </th> </tr>
+                                                                    <tr> <th>010 </th> <th> -log(2)   </th>  <th>2         </th><th>2/95         </th> </tr>
+                                                                    <tr> <th>011 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>100 </th> <th> -log(2)   </th>  <th>2         </th><th>2/95         </th> </tr>
+                                                                    <tr> <th>101 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>110 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>111 </th> <th> -6log(2)  </th>  <th>64        </th><th>64/95         </th> </tr>
+                                                                    <tr> <th>\(\sum\)</th> <th>               </th>  <th>95         </th><th>1.0         </th> </tr>
+                                                           </table>
+
+
+                                                      <h4>Exercise</h4>    
+                                                        <ol>  
+                                                            <li class="paragraph4"> Compute marginal probabilities \(p(x_1)\)  and \(p(x_1,x_2)\)  </li>         
+                                                            <li class="paragraph4"> Compute conditional probabilities \(p(x_1|x_2)\)  and \(p(x_3|x_2)\)  </li>         
+                                                            <li class="paragraph4"> Compute factorizations \(q(x) = \prod_i p(x_i) \)  and \(r(x) = p(x_1) p(x_2,x_3)\)  </li>         
+                          	       	                </ol>    
+
+                                                     </div>     
+
+                                                  <div class="left">   
+                                                   <h4>Univariate Marginal probabilities</h4>                          		 
+                                                    <p class="paragraph2"> 
+                                                        \[
+ 						                  \begin{align}
+
+                                                                     p(x_i) &=  \sum_{x'|x'_i=x_i} p(x') \\
+                                                                     p(x_1=0) &= p(000) + p(001) + p(010) + p(011) \\
+                                                                              &= 1/95 + 2/95 + 2/95 + 8/95 \\
+							                      &= 13/95 \\
+                                                                     p(x_1=1) &= p(100) + p(101) + p(110) + p(111) \\
+                                                                              &= 2/95 + 8/95 + 8/95 + 64/95 \\
+							                      &= 82/95           
+	                     					   \end{align}
+                                                        \] 
+                                                     </p> 
+                                                   <h4>Bivariate Marginal probabilities</h4>                          		 
+
+                                                    <p class="paragraph2"> 
+                                                        \[
+ 						                  \begin{align}
+
+                                                                     p(x_i,x_j) &=  \sum_{x'|x'_i=xi,x'_j=x_j} p(x') \\
+                                                                     p(x_1,x_2=00) &= p(000) + p(001) = 3/95 \\
+                                                                     p(x_1,x_2=01) &= p(010) + p(011) = 10/95 \\
+                                                                     p(x_1,x_2=10) &= p(100) + p(101) = 10/95 \\
+                                                                     p(x_1,x_2=11) &= p(110) + p(111) = 72/95 
+	                     					   \end{align}
+                                                        \] 
+                                                     </p> 
+          
+                                                    </div>                                                             
+                                                   </div>                                                                                     
+                                                  <aside class="notes">
+                                                    
+                                           	  </aside>
+                              
+        		             </section>   
+
+
+       		                     <section>       
+                                               <mark class="red"></mark>
+                                                <div class="container">
+                                                   <h3>Boltzmann machines</h3>   
+                                                   <div class="right">    
+                                                      <h4>Boltzmann Machine probabilities<h4>
+                                                            <table id="customers">
+                                                              <colgroup>                                         
+                                                                 <col style="background-color:yellow">
+                                                                 <col span="8" style="background-color:white">
+                                                                 <col span="3" style="background-color: #bfff00">
+
+                                                                 </colgroup>
+                                                                    <tr> <th>x=(v,h) </th> <th>\(E(x)\)      </th> <th>\(e^{-E(x)}\)</th>  <th>\(p(x)\) </th>  </tr>
+                                                                    <tr> <th>    </th> <th>     </th><th>         </th> <th>         </th> </tr>
+                                                                    <tr> <th>000 </th> <th>  0            </th>  <th>1        </th><th> 1/95        </th> </tr>
+                                                                    <tr> <th>001 </th> <th> -log(2)   </th>  <th>2        </th><th> 2/95        </th> </tr>
+                                                                    <tr> <th>010 </th> <th> -log(2)   </th>  <th>2         </th><th>2/95         </th> </tr>
+                                                                    <tr> <th>011 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>100 </th> <th> -log(2)   </th>  <th>2         </th><th>2/95         </th> </tr>
+                                                                    <tr> <th>101 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>110 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>111 </th> <th> -6log(2)  </th>  <th>64        </th><th>64/95         </th> </tr>
+                                                                    <tr> <th>\(\sum\)</th> <th>               </th>  <th>95         </th><th>1.0         </th> </tr>
+                                                           </table>
+
+
+                                                      <h4>Exercise</h4>    
+                                                        <ol>  
+                                                            <li class="paragraph4"> Compute marginal probabilities \(p(x_1)\)  and \(p(x_1,x_2)\)  </li>         
+                                                            <li class="paragraph4"> Compute conditional probabilities \(p(x_1|x_2)\) </li>         
+                                                            <li class="paragraph4"> Compute factorizations \(q(x) = \prod_i p(x_i) \)  and \(r(x) = p(x_1) p(x_2,x_3)\)  </li>         
+                          	       	                </ol>    
+
+                                                     </div>     
+
+                                                  <div class="left">   
+                                                   <h4>Conditional probabilities</h4>                          		 
+                                                    <p class="paragraph2"> 
+                                                        \[
+ 						                  \begin{align}
+
+                                                                     p(x_i|x_j) &=  \frac{p(x_i,x_j)}{p(x_j)} \\
+                                                                     p(x_1|x_2) &=  \frac{p(x_1,x_2)}{p(x_2)} \\
+                                                                     p(x_1=0|x_2=0) &= \frac{p(x_1=0,x_2=0)}{p(x_2)=0} = \frac{3/95}{13/95} = 3/13 \\
+                                                                     p(x_1=1|x_2=0) &= \frac{p(x_1=1,x_2=0)}{p(x_2)=0} = \frac{10/95}{13/95} = 10/13 \\
+                                                                     p(x_1=0|x_2=1) &= \frac{p(x_1=0,x_2=1)}{p(x_2)=1} = \frac{10/95}{82/95} = 10/82 \\
+                                                                     p(x_1=1|x_2=1) &= \frac{p(x_1=1,x_2=1)}{p(x_2)=1} = \frac{10/95}{22/95} = 72/82 \\
+                                                                       
+	                     					   \end{align}
+                                                        \] 
+                                                     </p>                                                  
+                                                    </div>                                                             
+                                                   </div>                                                                                     
+                                                  <aside class="notes">
+                                                    
+                                           	  </aside>
+                              
+        		             </section>   
+
+       		                     <section>       
+                                               <mark class="red"></mark>
+                                                <div class="container">
+                                                   <h3>Boltzmann machines</h3>   
+                                                   <div class="right">    
+                                                      <h4>Boltzmann Machine probabilities<h4>
+                                                            <table id="customers">
+                                                              <colgroup>                                         
+                                                                 <col style="background-color:yellow">
+                                                                 <col span="8" style="background-color:white">
+                                                                 <col span="3" style="background-color: #bfff00">
+
+                                                                 </colgroup>
+                                                                    <tr> <th>x=(v,h) </th> <th>\(E(x)\)      </th> <th>\(e^{-E(x)}\)</th>  <th>\(p(x)\) </th>  </tr>
+                                                                    <tr> <th>    </th> <th>     </th><th>         </th> <th>         </th> </tr>
+                                                                    <tr> <th>000 </th> <th>  0            </th>  <th>1        </th><th> 1/95        </th> </tr>
+                                                                    <tr> <th>001 </th> <th> -log(2)   </th>  <th>2        </th><th> 2/95        </th> </tr>
+                                                                    <tr> <th>010 </th> <th> -log(2)   </th>  <th>2         </th><th>2/95         </th> </tr>
+                                                                    <tr> <th>011 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>100 </th> <th> -log(2)   </th>  <th>2         </th><th>2/95         </th> </tr>
+                                                                    <tr> <th>101 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>110 </th> <th> -3log(2)  </th>  <th>8         </th><th>8/95         </th> </tr>
+                                                                    <tr> <th>111 </th> <th> -6log(2)  </th>  <th>64        </th><th>64/95         </th> </tr>
+                                                                    <tr> <th>\(\sum\)</th> <th>               </th>  <th>95         </th><th>1.0         </th> </tr>
+                                                           </table>
+
+
+                                                      <h4>Exercise</h4>    
+                                                        <ol>  
+                                                            <li class="paragraph4"> Compute marginal probabilities \(p(x_1)\)  and \(p(x_1,x_2)\)  </li>         
+                                                            <li class="paragraph4"> Compute conditional probabilities \(p(x_1|x_2)\) </li>         
+                                                            <li class="paragraph4"> Compute factorizations \(q(x) = \prod_i p(x_i) \)  and \(r(x) = p(x_1) p(x_2,x_3)\)  </li>         
+                          	       	                </ol>    
+
+                                                     </div>     
+
+                                                  <div class="left">   
+                                                   <h4>Factorizations</h4>                          		 
+                                                            <table id="customers">
+                                                              <colgroup>                                         
+                                                                 <col style="background-color:yellow">
+                                                                 <col span="8" style="background-color:white">
+                                                                 <col span="3" style="background-color: #bfff00">
+
+                                                                 </colgroup>
+                                                                    <tr> <th>x=(v,h) </th> <th>\(p(x)\) </th> <th>\(\prod_i p(x_i) \)</th>  <th>\(p(x_1)p(x_2,x_3)\) </th>  </tr>
+                                                                    <tr> <th>    </th> <th>  </th><th>         </th> <th>         </th> </tr>
+                                                                    <tr> <th>000 </th> <th>  1/95   </th>  <th>(13/95)*(13/95)*(13/95)        </th><th>(13/95)(3/95)         </th> </tr>
+                                                                    <tr> <th>001 </th> <th>  2/95   </th>  <th>(13/95)*(13/95)*(82/95)        </th><th>(13/95)(10/95)        </th> </tr>
+                                                                    <tr> <th>010 </th> <th>  2/95   </th>  <th>(13/95)*(82/95)*(13/95)         </th><th>(13/95)(10/95)         </th> </tr>
+                                                                    <tr> <th>011 </th> <th>  8/95  </th>  <th>(13/95)*(82/95)*(82/95)         </th><th>(13/95)(72/95)         </th> </tr>
+                                                                    <tr> <th>100 </th> <th>  2/95   </th>  <th>(82/95)*(13/95)*(13/95)         </th><th>(82/95)(3/95)         </th> </tr>
+                                                                    <tr> <th>101 </th> <th>  8/95  </th>  <th>(82/95)*(13/95)*(82/95)         </th><th>(82/95)(10/95)         </th> </tr>
+                                                                    <tr> <th>110 </th> <th>  8/95  </th>  <th>(82/95)*(82/95)*(13/95)         </th><th>(82/95)(10/95)         </th> </tr>
+                                                                    <tr> <th>111 </th> <th>  64/95  </th>  <th>(82/95)*(82/95)*(82/95)        </th><th>(82/95)(72/95)         </th> </tr>
+                                                                    <tr> <th>\(\sum\)</th> <th>1.0               </th>  <th>1.0         </th><th>1.0         </th> </tr>
+                                                           </table>
+
+
+
+
+
+
+                                                    </div>                                                             
+                                                   </div>                                                                                     
+                                                  <aside class="notes">
+                                                    
+                                           	  </aside>
+                              
+        		             </section>   
+       		             </section>   
+
+
+
+			</div>
+		</div>
+
+
+
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+                                width: '100%',
+                                height: '140%',
+   	                        history: true,
+				transition: 'linear',
+
+
+				math: {
+					// mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_HTML-full'
+				},
+
+				dependencies: [
+                                        { src: 'lib/js/fullscreen-img.js' },
+					{ src: 'lib/js/classList.js' },
+					{ src: 'plugin/math/math.js', async: true }
+
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

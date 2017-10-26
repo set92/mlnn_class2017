@@ -1,0 +1,1585 @@
+<!doctype html>
+<html lang="en">
+
+
+   
+    
+	<head>
+		<meta charset="utf-8">
+
+		<title>Machine Learning and Neural Networks</title>
+                <meta name="author" content="Roberto Santana">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<!-- <link rel="stylesheet" href="css/reveal.css">  -->
+                <link rel="stylesheet" href="css/fullscreen-img.css">
+                <link rel="stylesheet" href="css/added_css/notebook.css">
+   	        <link rel="stylesheet" href="css/reveal.css">
+                <link rel="stylesheet" href="css/theme/nncourse.css" id="theme">
+                                
+
+	</head>
+
+	<body>
+
+
+		<div class="reveal">
+			<div class="slides">
+
+				<section>
+                                          <div class="my_container">
+                                        <h2>Machine Learning and Neural Networks</h2>
+					<p>Roberto Santana<p>
+					<p>Department of Computer Science and Artificial Intelligence</p>
+                                        <p>University of the Basque Country</p>
+                          		 </div>   
+				</section>
+                                <section id="sec:NN_Intro">   
+                                            <div class="my_container">
+                                             <h3>Neural Network Paradigms: Table of Contents </h3>
+                                        
+                                              <table style="width:100%"; border=solid>
+
+
+                                                  <tr>
+
+
+
+                                                     <td><p class="paragraph2"> <a href="#/sec:NNs_MLP">Multilayer perceptron </a></p></td>
+
+
+                                                     <td><p class="paragraph2"> <a href="#/sec:NNs_Types_and_Properties">MLP properties </a></p></td>
+
+                                                     <td><p class="paragraph2"> <a href="#/sec:NNs_Backpropagation"> Backpropagation </a></p></td>
+
+                                                      <td> <p class="paragraph2"> <a href="#/sec:NNs_Learning"></a></p></td>       
+                        
+
+                                                  </tr>    
+
+                                                  <tr>                 
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NNs_Competitive"> Competitive learning  </a></p></td>         
+
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NN_Quantization">Vector quantization </a></p></td>
+
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NNs_LVQ"> LVQ networks </a></p></td>
+
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NNs_SOM"> SOM and Kohonen NNs </a></p></td>
+ 
+                                                   </tr>        
+
+                                                  <tr>                 
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NNs_Spiking"> Spiking networks </a></p></td>         
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NNs_Neuron_Models"> Neuron modeling  </a></p></td>
+
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NNs_Neural_Code">Neural code </a></p> </td>
+
+
+                                                      <td> <p class="paragraph2"> <a href="#/sec:NNs_SNNs_Topologies"> SNN topologies  </a></p></td>
+     
+                                                   </tr>     
+
+                                                  <tr>                 
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NNs_Taxonomy"> NN Taxonomy </a></p></td>         
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NNs_Neuron_Models">  </a></p></td>
+
+                                                     <td> <p class="paragraph2"> <a href="#/sec:NNs_Neural_Code"> </a></p> </td>
+
+
+                                                      <td> <p class="paragraph2"> <a href="#/sec:NNs_SNNs_Topologies"> </a></p></td>
+     
+                                                   </tr>  
+
+                                                                                       
+				              </table>	  
+                          	          </div>   
+
+  		   	             </section> 
+                          </section>                  
+
+
+
+        	              <section> 
+				      <section  id="sec:NNs_MLP">        
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                   <h3>Multilayer perceptron</h3>    
+
+                                                  <div class="right">
+                                                  <h4>Network architecture</h4>
+                                                      <ul>      
+                                                        <img src="href=../../imgl9/multilayer.png"  height="300" width="500">           
+					                
+                                                      </ul>                                               
+                                                      <p class="paragraph2"> Figure. <a href="http://www.asimovinstitute.org/neural-network-zoo/"> Neural network zoo.</a> </p>
+       
+                          		          </div>                                      
+                                                  <div class="left">   
+                                                      <h4>Characteristics</h4>
+                                                      <ul>   
+
+						          <li class="paragraph2">Provide a general framework for representing  <mark class="red">non-linear functional mappings</mark> between a set of input variables and a set of output variables. </li>
+   
+
+						          <li class="paragraph2">Mainly used for <mark class="red">supervised</mark> ML. </li>
+						          <li class="paragraph2">Extends the representation capabilities of the <mark class="red">perceptron</mark>. </li>
+						          <li class="paragraph2">Contrary to the perceptron, it includes one or more <mark class="red">hidden layers</mark>. </li>                   
+						          <li class="paragraph2">Different <mark class="red">activation functions</mark> can added to the network. </li>      
+						          <li class="paragraph2">Extensively applied to a variety of practical domains. </li>                                                 
+                                           
+                              
+						
+                                                      </ul>    
+                                                  </div>    
+                                                   
+                                              </div>  
+                                                    <p class="paragraph2"> C. M. Bishop.  <a href="http://cs.du.edu/~mitchell/mario_books/Neural_Networks_for_Pattern_Recognition_-_Christopher_Bishop.pdf">Neural Networks for Pattern Recognition.</a>  Oxford University Press. 2005.</p>
+                                                <p class="paragraph2">R. Rojas.<a href="https://page.mi.fu-berlin.de/rojas/neural/"> Neural networks: a systematic introduction.</a>   Springer Science & Business Media. Chapter 7. 2013.</p>
+                                                  <aside class="notes">
+					
+                                            	  </aside>
+                                          
+                                                 
+        		             </section> 
+
+                                        <section>
+                                	      <h3>Perceptron</h3>
+                                          <mark class="red"></mark>     
+                                              <div class="container">
+                                                  <span class="fragment"> 
+                                                  <div class="right">   
+                                                            
+                                                  <h4>Learning</h4>
+                                                     <ul>  
+
+                                                           <li class="paragraph2"> <mark class="red">Non-linear activation units</mark> are introduced.</li>
+
+                                                           <li class="paragraph2"> Weights are updated as:
+
+                                                              <br> 
+                                                              \[
+
+                                                                 w_i(t+1) = w_i(t) + \left (d_j -y_j(t) \right) x_{j,i},
+                                                                \]
+  
+                                                           </li>
+                                                           <p class="paragraph2"> where \( d_j \) is the desired output </p>
+                                                     </ul>        
+                                                  </div>   
+
+
+                                                  </span>
+                                                 <div class="left">
+                                                   <h4>Modern perceptron</h4>        
+                                                     <ul>  
+                            
+                                                     <p class="paragraph2"><img src="href=../../imgl6/Modern_Perceptron.png"  height="300" width="480"></p>                                  
+                                                     </ul>  
+
+                                                  </div>  
+                                                  <p class="paragraph2">H. Wang, B. Raj, and E. P. Xing. <a href="https://arxiv.org/abs/1702.07800">On the Origin of Deep Learning.</a>   arXiv preprint arXiv:1702.07800. 2017.</p>                                                       
+                                                                                          
+                                              </div>  
+                                          </section>
+
+                                      <section>
+                                          <div class="my_container">
+                                          <mark class="red"></mark> 
+                                                   <h3>Multi-Layer perceptron</h3>                                              
+                                                   <h4>Properties</h4>
+                                                   <ol>
+
+						          <li class="paragraph2"><mark class="red">Perceptron</mark>: Single neuron. </li>
+						          <li class="paragraph2"><mark class="red">One-layer neural network</mark>: Putting perceptrons side by side. </li>
+						          <li class="paragraph2"><mark class="red">Multi-layer neural network (MLP)</mark>: Stacking one one-layer NN upon the other.  </li>                    
+						          <li class="paragraph2"><mark class="red">Universal approximation property</mark>: An MLP can represent any function.  </li>
+                                  						           
+                                                   </ol>            
+                                                    <p class="paragraph2">K. Kawaguchi. <a href="http://digitalcommons.utep.edu/dissertations/AAIEP05411/">A multithreaded software model for backpropagation neural network applications.</a> Ph. D. Thesis. 2000.</p>
+                          		 </div>                                                          
+                                                   
+                                                   <aside class="notes">
+  						       To pass from the perceptron to a neural network is a relatively simple process. 
+                                                       First, we create one layer putting side by side perceptrons.
+                                                       Then we stack layers in a different dimesion. 
+                                                       The universal approximation property is perhaps one of the most mentioned properties of neural networks. 
+                                                       However, this property is in reality more complex to analyze, so it can be divided in three different properties. 
+                                            	   </aside>
+ 				      </section>
+
+
+                                      <section>
+                                          <mark class="red"></mark> 
+                                          <div class="my_container">      
+                                                   <h3>Multi-Layer perceptron</h3>                                        
+                                                   <ul>
+                                                    <img src="href=../../imgl9/MLP_Networks_Parameters.png"  height="300" width="800">   
+                                                   </ul>                
+                                                   <h4>Network function</h4>
+                                                   <ul>                                  
+						         <p class="paragraph2">
+							   \[
+						   	       \begin{align}
+							           h({\bf{x}})  =& g \left ( w_1 h_1({\bf{x}}) +  w_2 h_2({\bf{x}}) + c \right ) \\
+
+							                        =& g \left ( w_1 g(\theta_1 x_1 + \theta_2 x_2 + b_1) +  w_2 g(\theta_3 x_1 + \theta_4 x_2 + b_2) + c \right )
+
+
+ 						   	       \end{align}                                              
+							   \]
+                                                          </p>
+						  
+                                   						           
+                                                   </ul>            
+                          		 </div>   
+                                            
+                                                      <p class="paragraph2"> Q. V. Le. <a href="http://ai.stanford.edu/~quocle/tutorial1.pdf"> A Tutorial on Deep Learning. Part 1: Nonlinear Classifiers and The Backpropagation Algorithm.</a> 2015.</p>                                             
+                                                  <aside class="notes">
+                                            	  </aside>
+ 				      </section>
+
+                                      <section  id="sec:NNs_Types_and_Properties">
+                                          <div class="my_container">           
+                                                   <h3>Multi-Layer perceptron</h3>                                   
+                                                   <ul>
+                                                    <img src="href=../../imgl9/Layers_Capabilities.png"  height="500" width="1200">   
+                                                   </ul>                
+          
+                          		 </div>   
+                                            
+                                                      <p class="paragraph2">A. K. Jain, J. Mao, and K. M. Mohiuddin.   Figure. <a href="http://metalab.uniten.edu.my/~abdrahim/mitm613/Jain1996_ANN%20-%20A%20Tutorial.pdf"> Artificial neural networks: A tutorial.</a> Computer. Vol. 29 No. 3. Pp. 31-44. 1996.  </p>                               
+             
+                                                  <aside class="notes">
+                                            	  </aside>
+ 				      </section>
+
+                                      <section>
+                                          <div class="my_container">
+                                                   <h3>Multi-Layer perceptron</h3>                                              
+                                                   <h4>Properties</h4>
+                                                   <ol>
+
+						          <li class="paragraph2"> <mark class="red">Boolean approximation</mark>: An MLP of one hidden layer can represent any boolean function exactly. </li>
+						          <li class="paragraph2"> <mark class="red">Continuous approximation</mark>: An MLP of one hidden layer can approximate any bounded continuous function with arbitrary accuracy. </li>
+						          <li class="paragraph2"> <mark class="red">Arbitrary approximation</mark>: An MLP of two hidden layers can approximate any function with arbitrary accuracy. </li>                                                      						           
+                                   						           
+                                                   </ol>            
+                          		 </div>   
+                                              
+                                                  <aside class="notes">
+            
+                                                       We will not explain or prove any of the properties but it is important to take them into account to evaluate the power of NNs. 
+                                                       Basically, we see that as the complexity of the networks is increased they are able to represent more general function classes. 
+                                            	  </aside>
+ 				      </section>
+
+
+
+
+
+                                      <section>
+                                                <div class="container">
+                                               <mark class="red"></mark> 
+                                                   <h3>Multi-Layer perceptron</h3> 
+                             		           <h4>Backpropagation</h4> 
+
+                                                <div class="right">
+       
+                             		        <h4>Characteristics</h4>  
+                                                   <ul>             
+
+						          <li class="paragraph2">Backpropagation provides a <mark class="red"> computationally efficient method</mark> for computing the derivatives.</li> 
+
+						          <li class="paragraph2">At intermediate nodes, it  <mark class="red"> computes</mark>  the gradients of each set of local weights.</li>
+						          <li class="paragraph2">Once the derivatives are found, <mark class="red">different optimization schemes</mark>  (e.g., gradient descent) can be used to update the weights.</li> 
+                                                
+                                                      <ul/>                    
+               
+                                                 </div>            
+
+                                                <div class="left">     
+                             		        <h4>Goals</h4> 
+                                                   <ul> 
+
+
+						          <li class="paragraph2">The backpropagation algorithm is used to calculate the <mark class="red">gradient of the error of the network</mark> with respect to the network's modifiable weights.  </li>
+						          <li class="paragraph2">In the literature, the term is also used to refer to an algorithm that looks for the  <mark class="red">minimum of the error function</mark> in weight space.</li>
+						          <li class="paragraph2">In this broader interpretation, it evaluates the derivatives of the errors with respect to the weights, and use these derivatives to find the weight values that minimize the error.</li> 
+
+
+						          <li class="paragraph2">For an arbitrary network, there is no guarantee that the algorithm will converge to the optimum.</li>
+					  
+       
+                                                 
+                                                     <ul/>      
+						 </div>        
+
+
+                                                    <p class="paragraph2"> C. M. Bishop.  <a href="http://cs.du.edu/~mitchell/mario_books/Neural_Networks_for_Pattern_Recognition_-_Christopher_Bishop.pdf">Neural Networks for Pattern Recognition.</a>  Oxford University Press. 2005.</p>
+                                                <p class="paragraph2">R. Rojas.<a href="https://page.mi.fu-berlin.de/rojas/neural/"> Neural networks: a systematic introduction.</a>   Springer Science & Business Media. Chapter 7. 2013.</p>
+                                  
+                                                 </div>                           
+                                                                                                 
+                                               
+                                                   <aside class="notes">
+                                                 
+                                            	   </aside>
+        			      </section>
+
+
+                                        <section>
+                                	      <h3>Perceptron</h3>
+                                          <mark class="red"></mark>     
+                                              <div class="container">
+                                                  <div class="right">   
+
+                                                    <h4>Learning</h4>
+                                                    
+
+                                                          <p class="paragraph2"> At epoch \(t\), predictions are made as: 
+							    <br>
+							    <br>
+
+                                                           \[   
+                                                                  y^j(t) =   \begin{cases} 1, & \mbox{if } \sum_{i=1}^{n+1} w_i(t) x^j_i \geq 0 \, \forall j \\ 
+                                                                                      0, & \mbox{otherwise}  
+                                                                         \end{cases}
+                                                           \]
+                                                           </p>  
+
+                                                          <p class="paragraph2"> The error of the prediction is computed as: 
+							    <br>
+							    <br>
+
+
+                                                           \[   
+                                                                  MSE(t) =  \frac{1}{N} \sum_{j=1}^N  \left ( d^j-y^j(t) \right )^2
+                                                           \]
+                                                           </p>  
+
+
+                                                           <p class="paragraph2">  <mark class="red">Weights are updated as</mark>:
+
+                                                              <br> 
+							    <br>
+                                                              \[
+                                                                 w_i(t+1) = w_i(t) + \left ( d^j -y^j (t) \right ) x_{j}^{i},
+                                                              \]
+  
+                                                           </p>                  
+
+                                                                                                         
+                                                  </div>   
+
+                                                 <div class="left">
+                                                   <h4>Input and Notation</h4>      
+                                                      <ul>  
+
+                                                           <li class="paragraph2"> Inputs: 
+
+                                                              <ol>  
+
+                                                                <li class="paragraph2"> Dataset \(X\) where \(x_i^j\) is the value of variable \(x_i\) for instance \(x^j\) and  \(x_{n+1}^j=1 \, \forall j\) </li>
+                                                                <li class="paragraph2"> \(d^j\) is the class of  instance \(x^j\) (desired output).</li>
+                                                              </ol>  
+                                                           </li>
+                                                           <li class="paragraph2"> Notation: 
+
+                                                              <ol>  
+
+                                                                <li class="paragraph2"> \( w_i(t) \): Weight associated to feature \(i\) at time \(t\) .</li>
+
+                                                                <li class="paragraph2">  \(y^j\) is the output produced by the perceptron (predicted class).</li>
+                                           
+                                                              </ol>  
+                                                           </li>
+                                                                                                       
+                                                     </ul>          
+                                                  
+
+
+                                                  </div>  
+                                                   <p class="paragraph2"> F. Rosenblatt. <a href="https://www.ncbi.nlm.nih.gov/pubmed/13602029">The perceptron: a probabilistic model for information storage and organization in the brain.</a> Psychological review, 65(6):386. 1958.</p>                        
+                                                                                          
+                                              </div>  
+                                          </section>
+
+
+                                       <section>
+                                                <div class="container">
+                                                <h3>Multi-Layer perceptron</h3> 
+                             		        <h4>Backpropagation</h4>                                                  
+                                                   
+                                                <div class="right">
+                             		        <h4>Recursive computation</h4>         
+                                                   <ul>              
+                                                         <p class="paragraph2"> \( h^1 = x \)  </p>   
+                                                         <p class="paragraph2"> \( h^2 = g \left( (\theta^1)^T h^1 + b^1 \right) \)  </p>                                        
+                                                         <p class="paragraph2">  \( \dots \)  </p>
+                                                         <p class="paragraph2"> \( h^{L-1} = g \left( (\theta^{L-2})^T h^{L-2} + b^{L-2} \right) \)  </p>                                                  <p class="paragraph2"> <mark class="red">\(h^{L}\)</mark> = \(g \left( (\theta^{L-1})^T h^{L-1} + b^{L-1} \right) \). </p>   
+                                                      <ul/>                    
+               
+                                                 </div>            
+
+                                                <div class="left">     
+                             		        <h4>MLP</h4> 
+                                                   <ul>
+                                                    <img src="href=../../imgl9/MLP_Networks_Parameters.png"  height="250" width="3500">   
+                                                   </ul>                
+                                                   <h4>Network function</h4>
+                                                   <ul>                                  
+						         <p class="paragraph2">
+							   \[
+						   	       \begin{align}
+							           h({\bf{x}})  =& g \left ( w_1 h_1({\bf{x}}) +  w_2 h_2({\bf{x}}) + c \right ) \\
+
+							                        =& g \left ( w_1 g(\theta_1 x_1 + \theta_2 x_2 + b_1) +  w_2 g(\theta_3 x_1 + \theta_4 x_2 + b_2) + c \right )
+
+
+ 						   	       \end{align}                                              
+							   \]
+                                                          </p>
+						  
+                                   						           
+                                                   </ul>   
+						 </div>    
+
+                                 
+                                                 </div>                           
+
+                                                <p class="paragraph2"> Q. V. Le.  <a href="ai.stanford.edu/~quocle/tutorial1.pdf">A Tutorial on Deep Learning. Part 1. Nonlinear classifiers and the backpropagation algorithm. </a>2015.</p>                                                                                                    
+                                               
+                                                   <aside class="notes">
+                                                 
+                                            	   </aside>
+        			      </section>
+                                      <section>
+                                          <div class="my_container">          
+        
+                             		           <h3>MLP Backpropagation</h3>                            
+                                                   <ul>
+                                                    <img src="href=../../imgl9/BackPropagation_Simpler.png"  height="580" width="900">   
+                                                   </ul>                
+          
+                          		 </div>   
+                                            
+                                                      <p class="paragraph2">A. K. Jain, J. Mao, and K. M. Mohiuddin.   Figure. <a href="http://metalab.uniten.edu.my/~abdrahim/mitm613/Jain1996_ANN%20-%20A%20Tutorial.pdf"> Artificial neural networks: A tutorial.</a> Computer. Vol. 29 No. 3. Pp. 31-44. 1996.  </p>                               
+             
+                                                  <aside class="notes">
+                                            	  </aside>
+ 				      </section>
+
+                                       <section>
+                                                <div class="container">
+                                                <h3>Multi-Layer perceptron</h3> 
+                             		        <h4>Backpropagation</h4>                                                  
+                                                   
+                                                <div class="right">
+                             		        <h4>Recursive computation</h4>         
+                                                   <ol>              
+
+						     <li class="paragraph2"> Perform a  <mark class="red">feedforward pass</mark>  to compute \( h^1, h^2, h^3, \dots, h^L \).</li>
+
+						     <li class="paragraph2"> For the output layer <mark class="red">compute</mark>:
+                                                              \[   
+                                                                  \delta_1^L = 2(h^L-y) g' \left( \sum_{j=1}^{S_{L-1}} \theta_{1j}^{L-1}h_j^{L-1}+b_1^{L-1} \right)
+                                                              \]
+
+
+                                                         </li>
+
+						     <li class="paragraph2"> Perform a  <mark class="red">backward pass</mark> for   \( l = L-1, L-2, \dots, 2. \; \; \) For each neuron \(i\) in layer \(l\), <mark class="red">compute</mark>:
+  \[   
+                                                                  \delta_i^L =  \left( \sum_{j=1}^{S_{l+1}} \theta_{ji}^{l}
+\delta_j^{l+1} \right)  g' \left( \sum_{j=1}^{S_{l-1}} \theta_{ij}^{l-1}h_j^{l-1}+b_i^{l-1} \right)
+                                                              \]
+
+                                                         </li>
+
+
+						     <li class="paragraph2"> The desired  <mark class="red">partial derivatives</mark>  can be computed as \( \Delta \theta_{ij}^{l} = h_j^{l} \delta_i^{l+1} \) and \( \Delta b_i^{l} = \delta_i^{l+1} \).</li>
+   
+                                                      </ol>                    
+               
+                                                 </div>            
+
+                                                <div class="left">     
+                             		        <h4>Notation</h4> 
+                                                   <ul> 
+                                                         <p class="paragraph2"> \( h(x) \): decision function  </p>   
+                                                         <p class="paragraph2"> \( g \): activation function  </p>                  
+                                                         <p class="paragraph2"> \(  \theta^l_{ij} \): weight at layer \(l\)-th between input \(j\)-th and neuron \(i\)-th in layer \((l+1)\)-th </p>  
+                                                         <p class="paragraph2"> \( b_i \): bias  of neuron \( i \)  </p>    
+                                                         <p class="paragraph2"> \( s_l \): number of neurons in the layer </p>       
+
+                                                     <ul/>      
+						 </div>        
+
+
+                                                <p class="paragraph2"> Q. V. Le.  <a href="ai.stanford.edu/~quocle/tutorial1.pdf">A Tutorial on Deep Learning. Part 1. Nonlinear classifiers and the backpropagation algorithm. </a>2015.</p>
+                                                <p class="paragraph2">R. Rojas.<a href="https://page.mi.fu-berlin.de/rojas/neural/"> Neural networks: a systematic introduction.</a>   Springer Science & Business Media. Chapter 7. 2013.</p>
+                                  
+                                                 </div>                           
+                                                                                                 
+                                               
+                                                   <aside class="notes">
+                                                 
+                                            	   </aside>
+        			      </section>
+                             </section>  
+
+
+
+                           <section> 		
+ 				      <section id="sec:NNs_Competitive">
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                <h3>Competitive learning</h3>    
+                                                   <div class="right">      
+                          		            <div>	 
+                                                      <h4>Objective</h4>   
+                          		            </div>	                        		 
+                                                     <ul>  
+                                                          <li class="paragraph2">The goal of of competitive learning is to <mark class="red">group the data</mark> by forming clusters.</li>
+
+                                                          <li class="paragraph2">It is expected that the <mark class="red">similarities of instances within the same group</mark>  found by the network is as great as possible.</li>
+
+                                                          <li class="paragraph2">The <mark class="red">differences between instances in different classes</mark>  is as great as possible.</li>
+
+                                                          <li class="paragraph2">Generally, no label are used in training the network (i.e., <mark class="red">unsupervised learning</mark>). </li>
+
+
+                                                  </div>                 		         
+
+                                                   <div class="left">  
+
+                                                    <div>	 
+                                                     <h4>Characteristics</h4>   
+                          		            </div>
+                                                     <ul> 
+
+                                                        <li class="paragraph2">A layer of neurons that are <mark class="red">identical</mark> except that their <mark class="red">weights are different</mark>. </li>
+
+                                                        <li class="paragraph2"><mark class="red"> Neurons compete</mark> amongst themselves <mark class="red"></mark> to be activated. </li>
+                                                        <li class="paragraph2"> Only one neuron is activated at each time (<mark class="red">winner-takes-all neuron</mark>). </li>
+                                                         <li class="paragraph2">The <mark class="red">learning mechanism</mark> strengths the mapping between certain neurons and particular inputs. </li> 
+      
+                                                         <li class="paragraph2"> They are used for <mark class="red">data mining</mark>, <mark class="red">data visualization</mark>, <mark class="red">dimensionality reduction</mark> and <mark class="red">exploratory data analysis</mark>. </li>
+                           
+                                                  </ul> 
+                             
+                                                     </ul>    
+
+                          		    
+                                                   </div>  
+                                                     
+                                             </div>  
+                                          
+                                      
+                                                  <aside class="notes">
+                                            	  </aside>
+                              
+        		             </section>   
+
+
+                                     <section>
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                   <h3>Competitive learning</h3>      
+                                                  <div class="right">      
+
+                          		            <div>	 
+                                                     <h4>Characteristics</h4>   
+                          		            </div>
+                                                     <ul> 
+                                                        <li class="paragraph2"> The learning rule is a variant of <mark class="red">Hebbian learning</mark>  (with weight decay).  </li>
+                                                        <li class="paragraph2"> A <mark class="red">potential problem</mark> is that some neurons may continue to gain the competition while other neurons are never selected. </li>
+                                                   
+                                                  </ul> 
+
+
+                                                   </div>                 		         
+
+                                                   <div class="left">  
+                          		            <div>	 
+                                                      <h4>Typical learning</h4>   
+                          		            </div>	                        		 
+                                                     <ul>  
+                                                        <li class="paragraph2"> The <mark class="red">output</mark> of all neurons is computed as 
+							  <br>
+							  <br>
+							  \[
+							    y_i = \sum_{j} w_{i,j} x_j, \forall \; i
+
+                                                          \]
+
+
+                                                        </li>
+                                                        <p class="paragraph2">and the <mark class="red">winner neuron</mark>  is computed as the one whose prediction is the best.  </p>
+                                                       <li class="paragraph2"> Then, the <mark class="red">weights</mark> for the winning neuron \(i\) <mark class="red">are updated</mark> as:
+							 \[
+							    \Delta w_{i,j} = \eta (x_j - w_{i,j})
+
+                                                          \]
+
+
+                                                        </li>
+
+
+                                                  </ul>    
+
+                          		    
+                                                </div>  
+                                                     
+                                             </div>  
+                                          
+                                      
+                                                  <aside class="notes">
+                                            	  </aside>
+                              
+        		             </section>   
+
+
+
+                                      <section  id="sec:NN_Quantization">
+                                          <div class="my_container">                
+						  <h3> Vector Quantization</h3>                               
+                                                   <ul>
+                                                    <img src="href=../../imgl9/Image_Quantization.png"  height="500" width="1200">   
+                                                   </ul>                
+          
+                          		 </div>   
+                                            
+                                                      <p class="paragraph2">C. Karri and U. Jena. <a href="https://ac.els-cdn.com/S2215098615001664/1-s2.0-S2215098615001664-main.pdf?_tid=961b9a40-b2c3-11e7-b6f7-00000aab0f27&acdnat=1508194056_13603fea5445cf0136daecb9d0b378fa">Fast vector quantization using a bat algorithm for image compression.</a>Engineering Science and Technology, an International Journal. Vol. 19. No. 2. Pp.  769-781. 2016.</p>                               
+
+             
+                                                  <aside class="notes">
+                                            	  </aside>
+ 				      </section>
+
+
+                                      <section>
+                                          <div class="my_container">                
+						  <h3> Vector Quantization with competitive learning NNs</h3>                               
+                                                   <ul>
+                                                    <img src="href=../../imgl9/VectorQuantization_CodeBooks.png"  height="500" width="1200">   
+                                                   </ul>                
+          
+                          		 </div>   
+                                            
+                                                      <p class="paragraph2">H. C. Howard et al. <a href="http://ieeexplore.ieee.org/abstract/document/707586/">Competitive learning algorithms and neurocomputer architecture.</a>IEEE Transactions on Computers. Vol. 47. No. 8. Pp. 847-858. 1998.</p>                               
+
+                                                  <aside class="notes">
+                                            	  </aside>
+ 				      </section>
+
+
+				      <section>        
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+						  <h3>Learning Vector Quantization</h3>    
+                                        
+                                                  <div class="right">
+
+                                                      <ul>      
+                                                        <img src="http://www.neural-forecasting.com/lvq_neural_nets-Dateien/image002.jpg"  height="450" width="500">           
+					                
+                                                      </ul> 
+
+                                                       <p class="paragraph2"> Figure. <a href="http://www.neural-forecasting.com/lvq_neural_nets.htm"> Forecasting with artificial neural networks.</a> </p>                                              
+                                                 
+                          		          </div>                                      
+                                                  <div class="left">   
+                          		            <div>
+						      <h4>Characteristics</h4>  
+                          		            </div>
+                                                     <ul>  
+                                                        <li class="paragraph2"> Codebook vectors represent <mark class="red"> class regions</mark>.</li> 
+
+                                                       <li class="paragraph2"> Each codebook vector is <mark class="red"> defined by the weights </mark> between one neuron and all the inputs.</li> 
+
+                                                         <li class="paragraph2">Each <mark class="red">prototype represents a region</mark>  labelled with a class. </li> 
+
+                                                         <li class="paragraph2">Prototypes are localized in the centre of a class or decision region (<mark class="red">"Voronoi cell"</mark>) in the input space. </li> 
+
+
+                                                         <li class="paragraph2">The regions are <mark class="red">separated by the hyperplanes</mark> between the prototypes.</li>                                 
+    
+                                                         <li class="paragraph2">A class can be represented by an <mark class="red">arbitrary number of prototypes</mark>. </li> 
+
+
+                                                         <li class="paragraph2">One prototype can only represent a <mark class="red">single class</mark>. </li> 
+
+                                                      </ul>                                                      
+                                                      
+                                                      
+                                                  </div>    
+                                                   
+                                              </div>  
+                                                  <aside class="notes">
+						  </aside>
+                                          
+                                                 
+        		             </section> 
+                                    <section>
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                  <h3>Competitive learning algorithms</h3>     
+  
+                                                  <div class="right">      
+
+                          		            <div>
+						      <h4>LVQ variants and developments</h4>  
+                          		            </div>	                        		 
+                                                     <ul>  
+ 
+                                                        <li class="paragraph2">Different <mark class="red">variants of LVQ</mark>  algorithms have been proposed.</li> 
+                                                        <li class="paragraph2">They mainly differ in the <mark class="red">learning rules</mark>  used.</li> 
+                                                        <li class="paragraph2">LVQ1, LVQ2.1 and LVQ3 proposed by Kohonen used <mark class="red">heuristic learning rules</mark>.</li> 
+                                                        <li class="paragraph2">Other extensions use <mark class="red">Margin Maximization</mark>  and <mark class="red">Likelihood-ratio maximization</mark>. </li> 
+
+
+                                                     </ul>         
+
+                                                       <p class="paragraph2"> D. Nova and P. A. Estevez. <a href="https://link.springer.com/article/10.1007/s00521-013-1535-3"> A review of learning vector quantization classifiers.</a> Neural Computing and Applications 25.3-4. Pp. 511-524. 2014.</p> 
+                                                
+                                                   </div>                 		         
+
+                                                   <div class="left">  
+                          		            <div>
+                                                        <h4>LVQ Learning</h4>  
+                          		            </div>	                        		 
+                                                     <ul>  
+                                                        <li class="paragraph2">Learning consists of <mark class="red">modifying the weights</mark>  in accordance with adapting rules. </li> 
+                                                        <li class="paragraph2">Given an input,  the <mark class="red">winner neuron</mark> is moved <mark class="red">closer</mark> if it correctly classifies the input or moved in the <mark class="red">oppossite direction</mark>  otherwise.</li> 
+
+                                                        <li class="paragraph2">The magnitudes of these weight adjustments are controlled by a <mark class="red">learning rate </mark> which can be lowered over time in order to get finer movements in a later learning phase.</li> 
+
+                                                        <li class="paragraph2">The <mark class="red">class boundaries are adjusted</mark> during the learning proces correspond to the class of the prototype.</li> 
+                                                        <li class="paragraph2">The classification is <mark class="red">optimal </mark> if all inputs fall within a  cell with the right class.</li> 
+
+
+                                                     </ul>    
+
+                                                   </div>  
+                                                     
+                                             </div>  
+                                          
+                                      
+                                                  <aside class="notes">
+                                            	  </aside>
+                              
+        		             </section> 
+
+                                     <section>
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                  <h3>Competitive learning algorithms for quantization (Summary)</h3>     
+  
+                                                  <div class="right">      
+
+                          		            <div>
+						      <h4>Learning Vector Quantization</h4>  
+                          		            </div>	                        		 
+                                                     <ul>  
+ 
+                                                        <li class="paragraph2"><mark class="red"> Supervised</mark> learning algorithm.</li> 
+                                                        <li class="paragraph2"> Prototypes will serve to define  <mark class="red">class regions</mark>.</li> 
+                                                        <li class="paragraph2">The goal is to minimize  the <mark class="red"> number of misclassifications</mark>.</li> 
+                                                        <li class="paragraph2">The computational cost depends on the <mark class="red">number of prototypes</mark>.</li> 
+                                                        <li class="paragraph2">They can be used for <mark class="red">multi-class</mark> problems.</li> 
+ 
+                                                     </ul>                                                         
+                                                   </div>                 		         
+
+                                                   <div class="left">  
+                          		            <div>
+                                                        <h4>Vector Quantization</h4>  
+                          		            </div>	                        		 
+                                                     <ul>  
+ 
+                                                        <li class="paragraph2"><mark class="red">Unsupervised</mark> learning algorithm.</li> 
+                                                        <li class="paragraph2">The goal is <mark class="red">learning</mark> prototypes (<mark class="red">codevectors</mark>) that minimize the reconstruction error.</li> 
+                                                        <li class="paragraph2">Very related to <mark class="red">self-organizing maps</mark>.</li> 
+                                                        <li class="paragraph2">It is used for <mark class="red">clustering</mark>, <mark class="red">data compression</mark>, and <mark class="red">visualization.</mark></li> 
+ 
+                                                     </ul>    
+
+                                                   </div>  
+                                                     
+                                             </div>  
+                                          
+                                      
+                                                  <aside class="notes">
+                                            	  </aside>
+                              
+        		             </section> 
+
+				      <section  id="sec:NNs_SOM">        
+                                               <mark class="red"></mark>
+                                               <div class="container">
+                                                   <h3>Neural Networks</h3>           
+                                                   <h4>Self Organizing Map (SOM)</h4>                                          
+                                                  <div class="right">
+                                                  <h4>Network architecture</h4>
+                                                      <ul>      
+                                                        <img src="href=../../img/NNZoo/kn.png"  height="300" width="500">           
+					                
+                                                      </ul>                                               
+                                                      <p class="paragraph2"> Figure. <a href="http://www.asimovinstitute.org/neural-network-zoo/"> Neural network zoo.</a> </p>
+       
+                          		          </div>                                      
+                                                  <div class="left">   
+                                                      <h4>Characteristics</h4>
+                                                      <ul>      
+
+						          <li class="paragraph2">Used for <mark class="red">unsupervised classification</mark> and as a visualization tool. </li>
+						          <li class="paragraph2">Mainly applied for <mark class="red">dimensionality reduction</mark> of high-dimensional data. </li>
+						          <li class="paragraph2">In the reduced space, it retains the <mark class="red">topological similarity</mark>  of data points. </li>                                                 
+						          <li class="paragraph2">In most applications, a <mark class="red">2-dimensional lattice-like</mark> , representation is learned. </li>
+						          <li class="paragraph2">The network <mark class="red">self-organizes</mark> depending on the input data. </li>
+
+                                                      </ul>    
+                                                      <p class="paragraph2">T.  Kohonen. <a href="http://ieeexplore.ieee.org/document/58325/">The self-organizing map. </a> Proceedings of the IEEE, 78(9):1464--1480. 1990.  </p>                                                                                                  </div>    
+                                                   
+                                              </div>  
+                                                  <aside class="notes">
+						    SOM is one of the simplest models but it can be very useful for visualization and dimensionality reduction.
+                                            	  </aside>
+                                          
+                                                 
+        		             </section> 
+
+
+
+				      <section>        
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                   <h3>Self Organizing Map (SOM)</h3>
+                                                    <h4>Cortical sensory homunculus</h4>
+                                         
+                                                  <div class="right">
+
+                                                      <ul>      
+                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/1421_Sensory_Homunculus.jpg/800px-1421_Sensory_Homunculus.jpg"  height="380" width="500">           
+					                
+                                                      </ul>                                               
+                                                 
+                                                         <p class="paragraph2"> By OpenStax College - Anatomy &amp; Physiology, Connexions Web site. <a rel="nofollow" class="external free" href="http://cnx.org/content/col11496/1.6/">http://cnx.org/content/col11496/1.6/</a>, Jun 19, 2013., <a href="http://creativecommons.org/licenses/by/3.0" title="Creative Commons Attribution 3.0">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=30148008">Link</a>  </p>
+                          		          </div>                                      
+                                                  <div class="left">   
+
+                                                  
+                                                      <ul>      
+                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Front_of_Sensory_Homunculus.gif"  height="420" width="500">           
+					                
+                                                      </ul>      
+                                                   <p class="paragraph2"> By Mpj29 (Own work) [<a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AFront_of_Sensory_Homunculus.gif">via Wikimedia Commons</a>  </p>                                         
+                                                      
+                                                  </div>    
+                                                   
+                                              </div>  
+                                                  <aside class="notes">
+						    SOM is one of the simplest models but it can be very useful for visualization and dimensionality reduction.
+                                            	  </aside>
+                                          
+                                                 
+        		             </section> 
+
+
+				      <section>        
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                   <h3>Self Organizing Map (SOM)</h3>
+                                        
+                                                  <div class="right">
+
+                                                      <ul>      
+                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/1421_Sensory_Homunculus.jpg/800px-1421_Sensory_Homunculus.jpg"  height="380" width="500">           
+					                
+                                                      </ul>                                               
+                                                 
+                                                         <p class="paragraph2"> By OpenStax College - Anatomy &amp; Physiology, Connexions Web site. <a rel="nofollow" class="external free" href="http://cnx.org/content/col11496/1.6/">http://cnx.org/content/col11496/1.6/</a>, Jun 19, 2013., <a href="http://creativecommons.org/licenses/by/3.0" title="Creative Commons Attribution 3.0">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=30148008">Link</a>  </p>
+                          		          </div>                                      
+                                                  <div class="left">   
+                         		            <div>
+                                                        <h4>Cortical maps</h4>  
+                          		            </div>	                        		 
+                                                     <ul>  
+                                                        <li class="paragraph2">In the cortex, <mark class="red">neurons</mark>  that process information about sensor and motor commands of  a <mark class="red">common</mark> anatomical region of the body  <mark class="red">share  a similar location</mark>.  </li>
+                                                        <li class="paragraph2"> The <mark class="red">extensions of the brain regions</mark> dedicated to process sensory information is <mark class="red">different according to the  part of the body</mark>.   </li>
+
+
+                                                        <li class="paragraph2"> For example,  a higher proportion of neurons is devoted to process data from the hands.  </li>
+                                                   
+                                                       
+                                                     </ul> 
+                                             
+                                                      
+                                                  </div>    
+                                                   
+                                              </div>  
+                                                  <aside class="notes">
+						    SOM is one of the simplest models but it can be very useful for visualization and dimensionality reduction.
+                                            	  </aside>
+                                          
+                                                 
+        		             </section> 
+
+
+
+                                    <section>
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                  <h3>Self Organizing Map (SOM)</h3>     
+  
+                                                  <div class="right">      
+
+                          		                             		 
+                                                     <ul>  
+   
+                                                        <img src="http://matias-ck.com/mlz/_images/scheme2.png"  height="380" width="500">    
+
+
+                                                    
+                                                     </ul>         
+                                                      <p class="paragraph2"> Figure. <a href="http://matias-ck.com/mlz/somz.html">SOMz: Self Organizing Maps and random atlas.</a> </p>                                                
+                                                   </div>                 		         
+
+                                                   <div class="left">  
+
+                                                     <div>
+						    <h4>Topographic maps</h4>  
+                          		            </div>	                        		 
+                                                     <ul>  
+ 
+                                                        <li class="paragraph2"> A <mark class="red">feature map</mark> uses the topological (physical) organization of the neurons to <mark class="red">model features of the input space</mark>. </li> 
+                                                        <li class="paragraph2"> It is expected that if <mark class="red">two inputs are close in the feature space</mark>, then the two neurons that respond (fire) to these inputs will be  <mark class="red">close in the layout of the neural network</mark>.   </li>
+                                                        <li class="paragraph2"> Similarly, if two neurons that are <mark class="red">close in the neural network</mark>, fire to two different inputs, then these inputs are <mark class="red">close in the feature space</mark>.  </li>                                                       
+                                                     </ul>                                                         
+      
+
+                                                   </div>  
+                                                     
+                                             </div>  
+                                          
+                                      
+                                                  <aside class="notes">
+                                            	  </aside>
+                              
+        		             </section>   
+
+
+
+                                     <section>
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                  <h3>Kohonen Networks</h3>     
+  
+                                                  <div class="right">      
+
+                          		            <div>
+						      <h4>Main steps of the learning algorithm</h4>  
+                          		            </div>	                        		 
+                                                     <ol>  
+ 
+                                                        <li class="paragraph2"><mark class="red">Initialization</mark></li> 
+                                                        <li class="paragraph2"><mark class="red">Competition</mark></li> 
+                                                         <li class="paragraph2"><mark class="red">Cooperation</mark></li> 
+                                                        <li class="paragraph2"><mark class="red">Adaptation</mark></li> 
+                                                                                                    
+                                                     </ol>                                                         
+                                                   </div>                 		         
+
+                                                   <div class="left">  
+                          		            <div>
+                                                        <h4>Characteristics</h4>  
+                          		            </div>	                        		 
+                                                     <ul>  
+                                                        <li class="paragraph2"> It is a particular <mark class="red">type of SOM</mark>. </li> 
+                                                        <li class="paragraph2"> It has a <mark class="red">feed-forward structure</mark>. </li>                                                        
+                                                         <li class="paragraph2"> One <mark class="red">input layer</mark> and a <mark class="red">computational layer of neurons</mark>. </li> 
+                                                        <li class="paragraph2"> Neurons are arranged in <mark class="red">rows and columns</mark>. </li> 
+
+                                                        <li class="paragraph2"> All neurons in the computational layer are <mark class="red">connected to all input nodes</mark. </li>                                                       
+                                                     </ul>    
+
+                                                   </div>  
+                                                     
+                                             </div>  
+                                          
+                                      
+                                                  <aside class="notes">
+                                            	  </aside>
+                              
+        		             </section>   
+
+                                     <section>
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                 <h3>Kohonen Networks</h3>   
+            
+                                                  <div class="right">      
+
+                          		            <div>	 
+                                                     <h4>Cooperation</h4>   
+                          		            </div>
+                                                     <ul> 
+                                                        <li class="paragraph2">A <mark class="red">topological neighborhood</mark> that  decays with the lateral distance \( S_{i,j} \) is defined in the grid of neurons as:
+							  \[
+							    T_{j,I({\bf{x}})} = e^{\frac{-S^2_{j,I({\bf{x}})}}{2\sigma^2}}
+							  \]
+                                                        </li>               
+							<p class="paragraph2">where \( I({\bf{x}}) \) is the <mark class="red">index of the winning neuron</mark>, and \( \sigma \) is the size of the neighborhood. </p>                                    
+                                                   
+                                                     </ul> 
+                          		            <div>	
+                                                     <h4>Adaptation</h4>   
+                          		            </div>
+                                                     <ul> 
+                                                        <li class="paragraph2">Neighbors to the winning neuron have their <mark class="red">weights updated</mark> as:
+
+							  \[
+                                                            \Delta w_{j,i} = \eta(t) \cdot  T_{j,I({\bf{x}})} \cdot (x_i - w_{j,i})
+							  \]
+
+
+                                                        </li>
+                                                        <p class="paragraph2">where the <mark class="red">learning rate depends</mark>  on <mark class="red">time</mark>  and on <mark class="red">parameters</mark> \( \eta_0 \) and \( \tau_{\eta} \) as:  \( \eta(t) = \eta_o e^{\frac{-t}{\tau_{\eta}}} \).    </p>
+                                           
+                                                   
+                                                     </ul> 
+
+
+                                                   </div>                 		         
+
+                                                   <div class="left">  
+                          		            <div>	 
+                                                     <h4>Initialization</h4>   
+                          		            </div>
+                                                     <ul> 
+                                                        <li class="paragraph2">All weights \(w_{i,j}\) are <mark class="red">randomly initialized</mark>. </li>                                          
+                                                     </ul> 
+                          		            <div>	 
+                                                      <h4>Competition</h4>   
+                          		            </div>	                        		 
+                                                     <ul>  
+                                                        <li class="paragraph2">For a given input \( x^k \), and for each possible neuron $j$ a <mark class="red">discriminant functions</mark>  \(d_j(x^k) \) is computed as: </li>
+                                                        <p class="paragraph2">  
+                                                        \[ 
+							  d(x^k) = \sum_{i=1}^{n} \left ( x^k_i -w_{j,i} \right )^2
+                                                        \] 
+                                                        </p>
+                                                        <li class="paragraph2"> <mark class="red">Other discriminant functions</mark> could be used.  </li>
+                                                       
+                                                     </ul>    
+
+                          		    
+                                                   </div>  
+                                                     
+                                             </div>  
+                                          
+                                      
+                                                  <aside class="notes">
+                                            	  </aside>
+                              
+        		             </section>   
+
+
+				      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                  <h3>Kohonen Networks</h3>   
+                                                  <h4>Limitations</h4> 
+                                             
+                                                   <ol>
+                                                          <li class="paragraph2"> A <mark class="red">representative set of sufficient instances</mark> is needed in order to develop meaningful clusters. </li>
+                                                          <li class="paragraph2">It <mark class="red">requires several parameters</mark>  (e.g., \( \sigma_0, \tau_{sigma}, \eta_{0}, \tau_{\eta}) \) and can be <mark class="red">sensitive to the choice of these parameters</mark>. </li>
+
+                                                          <li class="paragraph2"> Clusters will often be split into smaller clusters, creating <mark class="red">different regions containing similar neurons</mark>. </li>
+
+
+                                                          <li class="paragraph2">  The algorithm <mark class="red">assumes a low dimensional non-linear Euclidean manifold</mark>  in the data space on which the data lies.  </li>
+                                        
+						  
+                                                    </ol>     						           
+                          		 </div>                                                 
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+
+                                      <section>
+                                          <div class="my_container">           
+                                                   <h3>Kohonen Networks</h3> 
+                                                   <h4>Learning Algorithm</h4> 
+                                                   
+
+                                                          <p class="paragraph2"><img src="href= ../../img/SOM_Algorithm.png"  height="440" width="950"></p>                                    
+				
+                          		 </div>                                                            						           
+                                                  
+                                           
+                                                  <aside class="notes">
+						    The pseudocode describes the different steps of the SOM learning algorithm. 
+                                            	  </aside>
+ 				      </section>
+
+ 				</section>
+
+ 				<section>
+				      <section  id="sec:NNs_Spiking">        
+                                               <mark class="red"></mark>
+                                               <div class="container">       
+                                                   <h3>Spiking Neural Networks</h3>                                          
+                                                  <div class="right">
+                                                  <h4>Neural network in the brain</h4>
+                                                      <ul>      
+                                                        <img src="https://chickswithcrossbows.files.wordpress.com/2012/01/neuronas_ramon_y_cajal.jpg"  height="430" width="500">           
+					                
+                                                      </ul>                                               
+                                                      <p class="paragraph2"> Figure. <a  href="https://cvc.cervantes.es/ciencia/cajal/cajal_recuerdos/recuerdos/laminas.htm#"> Ramón y Cajal Drawings.</a> </p>
+       
+                          		          </div>                                      
+                                                  <div class="left">   
+                                                      <h4>Characteristics</h4>
+                                                      <ul>      
+
+						          <li class="paragraph2">SNNs are formed by neuron models that communicate by <mark class="red">sequences of spikes</mark>.</li>
+
+						          <li class="paragraph2"> The spiking dynamics of the neuron models are described by <mark class="red">differential equations</mark></li>
+
+
+						          <li class="paragraph2">Neurons are connected by  <mark class="red">artificial sypnases</mark>.</li>
+
+						          <li class="paragraph2">They are powerful tools for analysis of elementary processes in the brain.</li>
+						          <li class="paragraph2">Used for fast <mark class="red">signal-processing</mark>, <mark class="red">event detection</mark>, <mark class="red">classification</mark>, <mark class="red">speech recognition</mark>, or <mark class="red">motor control</mark>.</li>
+						          <li class="paragraph2">Computationally <mark class="red">more powerful than perceptrons</mark>  and sigmoidal gates.</li>
+
+                                                      </ul>    
+                                                      <p class="paragraph2">F. Ponulak and A. Kasinski <a href="https://www.infona.pl/resource/bwmeta1.element.agro-5be23866-c1b7-49a2-b1f0-38313d42386c"> Introduction to spiking neural networks: Information processing, learning and applications. </a> Acta neurobiologiae experimentalis 4.71. 2011.</p>     
+
+                                                 
+                                         </div>    
+                                                   
+                                              </div>  
+                                                  <aside class="notes">
+					
+                                            	  </aside>                                         
+                                                 
+        		             </section> 
+
+				      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                   <h3>Spiking Neural Networks</h3>  
+                                                    <h4>Neuronal behavior</h4>
+
+                                                   <ol>
+                                                       <img src="href=../../imgl9/Dendrites_Soma_Axon.png"  height="450" width="1000">  
+					  
+                                                    </ol>     						           
+                          		 </div>                         
+                                                      <p class="paragraph2">Figure: J. Vreeken <a href="http://zbc.uz.zgora.pl/Content/7127/7kasin.pdf"> Spiking neural networks: an introduction. </a> Research Report UU-CS-2003-008. Utrecht University Technical. 2002.</p>    
+                                                                         
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+				      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                   <h3>Spiking Neural Networks</h3>  
+                                                    <h4>Spiking neuron model</h4>
+
+                                                   <ol>
+                                                       <img src="href=../../imgl9/Spiking_Neuron_Paugam_et_al.png"  height="450" width="1000">  
+					  
+                                                    </ol>     						           
+                          		 </div>       
+                                                      <p class="paragraph2">H. Paugam-Moisy,  S. Bohte. <a href="http://ccfit.nsu.ru/~tarkov/Spiking%20neural%20networks/Bohte_Computing_with_spiking_neural_network.pdf">Computing with spiking neuron networks.</a> Handbook of natural computing. Pp. 335-376. 2012.</p>                     
+                                                                         
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+				      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                   <h3>Spiking Neural Networks</h3>  
+                                                    <h4>Spiking neuron model</h4>
+
+
+                                                   <ol>
+                                                       <img src="href=../../imgl9/IF_Model_Paugam_et_al.png"  height="450" width="1000">  
+					  
+                                                    </ol>     						           
+                          		 </div>       
+                                                      <p class="paragraph2">H. Paugam-Moisy,  S. Bohte. <a href="http://ccfit.nsu.ru/~tarkov/Spiking%20neural%20networks/Bohte_Computing_with_spiking_neural_network.pdf">Computing with spiking neuron networks.</a> Handbook of natural computing. Pp. 335-376. 2012.</p>                     
+                                                                         
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+                                      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                   <h3>Spiking Neural Networks</h3>  
+                                                    <h4>Spiking neuron model</h4>
+
+
+                                                   <ol>
+                                                       <img src="href=../../imgl9/LIF_Neuron_Integration.png"  height="450" width="1000">  
+					  
+                                                    </ol>     						           
+                          		 </div>                       
+                                                      <p class="paragraph2">Figure: F. Ponulak and A. Kasinski <a href="https://www.infona.pl/resource/bwmeta1.element.agro-5be23866-c1b7-49a2-b1f0-38313d42386c"> Introduction to spiking neural networks: Information processing, learning and applications. </a> Acta neurobiologiae experimentalis 4.71. 2011.</p>                            
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+				      <section id="sec:NNs_Neural_Code">        
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                    <h3>Spikes and information processing</h3>
+
+                                                  <div class="right">
+
+                                                      <ul>      
+                                                        <img src="href=../../imgl9/Spikes_Short.png"  height="560" width="500">          	                
+                                                      </ul>           
+
+                                                                                        
+                          		          </div>                                      
+                                                  <div class="left">                                                     
+                           		              <div>                                                     
+                                                        <h4>Neural code</h4>
+                          		               </div>        
+                                                      <ul>      
+
+						          <li class="paragraph2"><mark class="red">The problem of neural code</mark>: How is information encoded in the neural signal?</li>
+						          <li class="paragraph2">Two (not necessarily contradictory) explanations:
+
+                                                            <ol>      
+						              <li class="paragraph2"><mark class="red">Spike rate code</mark>: Neural information is encoded in the firing rate (number of spikes in a given time period).</li>
+  						              <li class="paragraph2"><mark class="red">Spike timing code</mark>: Neural information is encoded in the precise timing of spikes.</li>
+                                                            </ol> 
+                                                          </li>    
+
+						          <li class="paragraph2">The neural code problem is a very relevant question for brain-inspired approaches to ML and for Neuroscience.</li>
+
+						          <li class="paragraph2"> Spiking neural networks can be designed to exploit different ways of coding information in the neuron spikes.</li>
+
+
+                                                      </ul>    
+                                               
+                                                      
+                                                  </div>    
+                                                   
+                                              </div>  
+                                                      <p class="paragraph2">Figure: F. Ponulak and A. Kasinski <a href="https://www.infona.pl/resource/bwmeta1.element.agro-5be23866-c1b7-49a2-b1f0-38313d42386c"> Introduction to spiking neural networks: Information processing, learning and applications. </a> Acta neurobiologiae experimentalis 4.71. 2011.</p>                            
+
+                                                  <aside class="notes">
+                                            	  </aside>
+      		             </section> 
+
+
+				      <section>        
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                    <h3>Information Processing SNNs</h3>   
+                                                  <div class="right">
+                           		             <div>                                                     
+                                                     <h4>Rank-order coding (ROC)</h4>
+                          		             </div>         
+                                                      <ul>      
+						          <li class="paragraph2">Information is encoded by the <mark class="red">order of the spikes</mark> in the activity of a neural population.</li>
+						          <li class="paragraph2">The ROC model assumes that that each neuron emits only a single spike during a presentation of the stimulus (image).</li>
+
+                                                          <img src="href=../../imgl9/Information_Proc_ROC.png"  height="300" width="400"> 
+
+
+
+
+                                                      </ul>    
+                                                                                       
+                          		          </div>                                      
+                                                  <div class="left">                                                     
+                           		             <div>                                                     
+                                                     <h4>First spike</h4>
+                          		             </div>    	     
+                                                      <ul>      
+						          <li class="paragraph2">The information is <mark class="red"> encoded in the latency</mark> between the beginning of the stimulus and the time of the first spike.</li>
+						          <li class="paragraph2">Enables ultrafast information processing.</li>
+                                                          <img src="href=../../imgl9/Information_Proc_FirstSpike.png"  height="300" width="400"> 
+                                                      </ul>                                                     
+                                                      
+                                                  </div>    
+                                                   
+                                              </div>  
+                                                      <p class="paragraph2">F. Ponulak and A. Kasinski. <a href="https://www.infona.pl/resource/bwmeta1.element.agro-5be23866-c1b7-49a2-b1f0-38313d42386c"> Introduction to spiking neural networks: Information processing, learning and applications. </a> Acta neurobiologiae experimentalis. 4, 71. 2011.</p>
+                                                  <aside class="notes">
+                                            	  </aside>
+      		                     </section> 
+
+
+				      <section>        
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                    <h3>Information Processing SNNs</h3>   
+                                                  <div class="right">
+                           		             <div>                                                     
+                                                     <h4>Coding by synchrony</h4>
+                          		             </div>         
+                                                      <ul>      
+						          <li class="paragraph2">It is based on the assumption that <mark class="red">neurons</mark> that encode different bits of information on the same object <mark class="red">fire synchronously</mark>.</li>
+						          <li class="paragraph2">Networks from reciprocally coupled spiking neurons can undergo very rapid transitions from uncorrelated to synchronized states.</li>
+
+                                                          <img src="href=../../imgl9/Information_Proc_Synchrony.png"  height="300" width="400"> 
+
+
+
+
+                                                      </ul>    
+                                                                                       
+                          		          </div>                                      
+                                                  <div class="left">                                                     
+                           		             <div>                                                     
+                                                     <h4>Latency code</h4>
+                          		             </div>         
+                                                      <ul>      
+						          <li class="paragraph2">Information is contained in the <mark class="red">exact timing of a set of spikes</mark> relative to each other.</li>
+
+                                                          <li class="paragraph2">Precise relative spike timing is one of the critical parameters that control  many forms of synaptic plasticity</li>
+						          <li class="paragraph2">Very efficient in terms of information capacity.</li>
+                                                          <img src="href=../../imgl9/Information_Proc_Latency.png"  height="300" width="400"> 
+                                                      </ul>                                                     
+                                                      
+                                                  </div>    
+                                                   
+                                              </div>  
+                                                      <p class="paragraph2">F. Ponulak and A. Kasinski. <a href="https://www.infona.pl/resource/bwmeta1.element.agro-5be23866-c1b7-49a2-b1f0-38313d42386c"> Introduction to spiking neural networks: Information processing, learning and applications. </a> Acta neurobiologiae experimentalis. 4, 71. 2011.</p>
+                                                  <aside class="notes">
+                                            	  </aside>
+      		                     </section> 
+
+
+				      <section id="sec:NNs_SNNs_Topologies">        
+                                               <mark class="red"></mark>
+                                               <div class="container">     
+                                                    <h3>Spiking Neural Networks Topologies</h3>   
+                                                  <div class="right">
+                           		             <div>                                                     
+                                                     <h4>Recurrent networks</h4>
+                          		             </div>      
+                                                      <ul>      
+
+						          <li class="paragraph2">Individual neurons or population of neurons interact through <mark class="red">reciprocal (feedback) connections</mark>.</li>
+						          <li class="paragraph2">Are characterized by <mark class="red">richer dynamics</mark>  and potentially <mark class="red">higher computationally capabilities</mark> than feedforward networks.</li>
+						          <li class="paragraph2">They are also <mark class="red">more difficult to control and train</mark>.</li>
+
+
+                                                      </ul>    
+                          		             <div>                                                     
+                                                     <h4>Hybrid networks</h4>
+                          		             </div>          
+                                                      <ul>      
+						          <li class="paragraph2">Some populations may be strictly feedforward, while other have recurrent topologies.</li>
+						          <li class="paragraph2"><mark class="red"></mark> Interactions between the populations can be <mark class="red">one-directional</mark>  or <mark class="red">reciprocal</mark>.</li>
+						          <li class="paragraph2">Multiple types of hybrid networks are possible. Most extensively studied are <mark class="red">Synfire Chains</mark> and <mark class="red">Reservoir Computing</mark>. </li>
+
+                                                      </ul>  
+                                                       
+                                                                                       
+                          		          </div>                                      
+                                                  <div class="left"> 
+                          		             <div>                                                     
+                                                     <h4>Feedforward networks</h4>
+                          		             </div> 
+                                                      <ul>      
+
+						          <li class="paragraph2">  The <mark class="red">data-flow</mark> from input to output units is <mark class="red">strictly one-directional</mark>.</li>
+						          <li class="paragraph2">  The data processing can extend over <mark class="red">multiple layers of neurons</mark>.</li>
+						          <li class="paragraph2">  <mark class="red">No feedback connections</mark> are present.</li>
+						          <li class="paragraph2">  Ussually applied to <mark class="red">model low-level sensory systems</mark> (e.g. vision, olfaction, tactile sensing).</li>
+
+
+                                                      </ul>    
+   
+                                                      
+                                                  </div>    
+   
+                                                   
+                                              </div>  
+                                                      <p class="paragraph2">F. Ponulak and A. Kasinski. <a href="https://www.infona.pl/resource/bwmeta1.element.agro-5be23866-c1b7-49a2-b1f0-38313d42386c"> Introduction to spiking neural networks: Information processing, learning and applications. </a> Acta neurobiologiae experimentalis. 4, 71. 2011.</p>
+                                                  <aside class="notes">
+                                            	  </aside>
+      		                      </section>
+
+				      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                    <h3>Spiking Neural Networks Topologies</h3>   
+
+
+                                                   <ol>
+                                                       <img src="https://www.zurich.ibm.com/images/st/neuromorphic/Reservoir1.png"  height="250" width="1000">  
+					  
+                                                    </ol>  
+
+                          		             <div>                                                     
+                                                     <h4>Reservoir computing</h4>
+                          		             </div>    	
+
+                                                      <ul>      
+						          <li class="paragraph2">It consists of a fixed recurrent structure (<mark class="red">a reservoir</mark>) and a set of output neurons called <mark class="red"></mark>readouts.</li>
+						          <li class="paragraph2">The <mark class="red"> connectivity structure</mark> within the reservoir is usually <mark class="red">random and fixed</mark>.</li>
+						          <li class="paragraph2">Usually, readouts receive <mark class="red">only feedforward connections</mark>  from the reservoir.</li>
+                                                     </ul>    
+
+
+					           
+                          		 </div>                            
+                                                      <p class="paragraph2">Figure.  <a href="https://www.zurich.ibm.com/st/neuromorphic/architecture.html">Neuromorphic devices & systems.</a> IBM Research. Zurich.</p>                     
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+
+ 				      <section> 
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                    <h3>Spiking Neural Networks Topologies</h3>   
+
+
+                                                   <ol>
+                                                       <img src="href=../../imgl9/SNN_Models_Paugam.png"  height="250" width="1200"> 
+
+                                                    </ol>  
+
+                          		             <div>                                                     
+                                                     <h4>Echo State Network and Liquid State Machine</h4>
+                          		             </div>    	
+
+                                                      <ul>      
+						          <li class="paragraph2"><mark class="red">Echo State Network</mark> (ESN): Originally  intended to learn time series with recurrent neural networks. It includes backward connections from the output layer toward the reservoir. </li>
+						          <li class="paragraph2"><mark class="red">Liquid State Machine</mark> (LSM): Originally intended  to explain how a continuous stream of inputs from a rapidly changing environment can be processed in real time by recurrent circuits of <mark class="red">Integrate-and-Fire neurons</mark>. </li>
+						          <li class="paragraph2">In LSM the  reservoir  operates similarly to a "liquid filter" that <mark class="red"></mark> transforms the low-dimensional space of a set of motors stimulating its surface <mark class="red">into a higher dimensional space of waves</mark> in parallel.</li>
+                                                     </ul>    
+
+
+					           
+                          		 </div>                            
+                                                      <p class="paragraph2">H. Paugam-Moisy,  S. Bohte. <a href="http://ccfit.nsu.ru/~tarkov/Spiking%20neural%20networks/Bohte_Computing_with_spiking_neural_network.pdf">Computing with spiking neuron networks.</a> Handbook of natural computing. Pp. 335-376. 2012.</p>                     
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+                                                    
+
+
+				      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                    <h3>Spiking Neural Networks Topologies</h3>   
+
+                          		             <div> 
+                                                     <h4>Synfire chains</h4>
+                          		             </div> 
+                                                      <ul>      
+
+						          <li class="paragraph2">A multi-layered architecture (<mark class="red">a chain</mark>) in which spiking activity can propagate as a <mark class="red">synchronous wave of neuronal firing</mark>  from one layer (subpopulation) of the chain to the successive ones.</li>
+						          <li class="paragraph2"> Particular subpopulations may contain <mark class="red">recurrent connections</mark>.</li>
+						          <li class="paragraph2"> Considered as a possible mechanism to represent the relationship between two <mark class="red">delayed events</mark>.</li>
+                                                      </ul>                                                    
+
+                                                   <ol>
+                                                       <img src="https://www.frontiersin.org/files/Articles/1685/fncom-04-00154-HTML/image_m/fncom-04-00154-g001.jpg"  height="250" width="1000">  
+					  
+                                                    </ol>     	
+                                          
+                          		 </div>    
+                                                      <p class="paragraph2">Figure.  S. Schrader, M. Diesmann, and A. Morrison. <a href="https://www.frontiersin.org/articles/10.3389/fncom.2010.00154/full"> A compositionality machine realized by a hierarchic architecture of synfire chains. </a>Frontiers in Computational Neuroscience 4. 154. 2011.</p>
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+
+                                      <section>
+                                          <div class="my_container">
+                                               <mark class="red"></mark>   
+                                                   <h3>Learning in Spiking Neural Networks</h3>  
+                                                  <ol>
+
+						          <li class="paragraph2"><mark class="red">Unsupervised</mark> learning:</li>
+						          <li class="paragraph2"><mark class="red">Supervised</mark> learning:</li>
+						          <li class="paragraph2"><mark class="red">Reinforcement</mark> learning:</li>
+		  
+                                                    </ol>     						           
+                          		 </div>                       
+                                                      <p class="paragraph2">Figure: F. Ponulak and A. Kasinski <a href="https://www.infona.pl/resource/bwmeta1.element.agro-5be23866-c1b7-49a2-b1f0-38313d42386c"> Introduction to spiking neural networks: Information processing, learning and applications. </a> Acta neurobiologiae experimentalis 4.71. 2011.</p>                            
+                                                  <aside class="notes">
+                                                                                                  
+                                           	  </aside>
+ 				      </section> 
+
+                                      <section  id="sec:NNs_Taxonomy">
+                                          <div class="my_container">           
+                                                   <h3>A NN Taxonomy</h3>                                   
+                                                   <ul>
+                                                    <img src="href=../../imgl9/NN_Taxonomy.png"  height="500" width="1200">   
+                                                   </ul>                
+          
+                          		 </div>   
+                                            
+                                                      <p class="paragraph2">A. K. Jain, J. Mao, and K. M. Mohiuddin.   Figure. <a href="http://metalab.uniten.edu.my/~abdrahim/mitm613/Jain1996_ANN%20-%20A%20Tutorial.pdf"> Artificial neural networks: A tutorial.</a> Computer. Vol. 29 No. 3. Pp. 31-44. 1996.  </p>                               
+             
+                                                  <aside class="notes">
+                                            	  </aside>
+ 				      </section>
+
+
+
+         	             </section> 
+			</div>
+		</div>
+
+
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+
+                                width: '100%',
+                                height: '140%',
+   	                        history: true,
+				transition: 'linear',
+
+				math: {
+					// mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_HTML-full'
+				},
+
+				dependencies: [
+                                        { src: 'lib/js/fullscreen-img.js' },
+					{ src: 'lib/js/classList.js' },
+					{ src: 'plugin/math/math.js', async: true }
+
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

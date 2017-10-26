@@ -84,6 +84,17 @@ body {
 
  }
 
+
+.reveal pp {
+  width: inherit;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+
+ }
+
 .reveal .paragraph1 {
     font-size: 22px;
     line-height: 2.3;
@@ -96,6 +107,12 @@ body {
 
 .reveal .paragraph3 {
     font-size: 20px;
+    line-height: 0.01em;
+  }
+
+
+.reveal .paragraph4 {
+    font-size: 18px;
     line-height: 0.01em;
   }
 
@@ -218,9 +235,12 @@ width: 46%; }
 
 
 .reveal .container {
+   width: 100%;
    height: auto;
    overflow: hidden;
+   padding-right: 0px;
    color: #330000;
+
 }
 
 .reveal .right {
@@ -230,7 +250,9 @@ width: 46%; }
     border-radius: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
+    margin-right: 10px;
     background:  #e6fff9; 
+    color: #330000;
 }
 
 .reveal .left {
@@ -240,7 +262,9 @@ width: 46%; }
     border-radius: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
+    margin-left: 5px;
     background:  #e6fff9; 
+    color: #330000;
 }​​
 
 
