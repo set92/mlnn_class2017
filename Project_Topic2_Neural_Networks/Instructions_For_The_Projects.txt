@@ -1,0 +1,44 @@
+Instructions for the projects
+
+
+Objectives of the project and evaluation
+
+The  first objective of a project is to show that the student has been able to understand and masters one of the ML algorithms presented or referenced during the course. Therefore, it is expected that the student will be able explain what the particular implementation does and which are its advantages and limitations. Other objectives that will be evaluated in the project are:
+
+ - The preciseness of the written description, including a concise but clear description of the approach, organization of the material in an appropriate way, a clear proposal of a well-conceived experimental framework, when needed, and a thorough analysis of the results. Useful experiments are those that serve to answer relevant questions and produce insights. Therefore, you should discuss the figures, tables, or any other results presented, and explain what can be inferred from these results.   
+
+ - The novelty of the approach or implementation. Extensions to other application domains or improvements to baseline algorithms will be given special consideration (even if incomplete) and might be scored higher. You have an opportunity to display your creativity here! Beware however that "You Have to Master the Rules Before You Can Break the Rules". Therefore, extensions, improvements, and any proposed change to the traditional  algorithms should be clearly motivated on the grounds of a good understanding of the baseline algorithm and its limitations. This motivation should appear in the written report. 
+
+ - The efficiency of the implementation and how legible and well commented the Python code is. Jupyter notebooks should be commented to follow what is done in each cell. You may insert latex formulas to illustrate your point but consider that more text in the comments does not mean a more understandable code. Therefore, do not rewrite the report in the Jupyter notebook please!
+
+
+Project selection and presentation 
+
+Each of the three projects should correspond  to a different topic among the following three:
+
+1) General ML methods.
+2) Neural networks.
+3) Deep learning.
+
+Each project description specifies to which of the three topics it belongs to.
+
+An ordinary project includes:
+ 1)  A brief description of the project written in latex (between 4 and 8 pages).
+2) A commented Jupyter notebook showing how the code solves the problem.
+ 3) The Python code when not inserted in the notebook (available from github or from Egela in .zip).
+ 
+With few exceptions, each project will be available to a maximum of only two teams.
+
+Other questions:
+
+ Some programs included in the notebooks may take a long time to execute. Obviously, in order the revise the projects, it will be impossible to wait until one of such program ends its execution. For long-running executions students could save the output of the program as part of the submitted Jupyter notebook and write a comment in the notebook about how long the program takes to execute. Similarly, for methods that consumes a "huge" amount of RAM, a note should be included in the notebook as a Warning to take into account in the revision of the projects. Projects whose programs freeze the computer are good candidates to get a lower score so carefully test your code please. 
+
+If you have questions at the time of implementing a particular project you can consult me via email. Before sending the definitive version of the project for evaluation you may also send the project to receive some feedback "once". This possibility is optional. This means that students can submit the final projects without submitting it for feedback before. 
+
+
+
+
+
+
+
+
